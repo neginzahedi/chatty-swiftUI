@@ -11,6 +11,8 @@
 		0F5953682893557F00F4B258 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953672893557F00F4B258 /* ContentView.swift */; };
 		0F59536A2893558000F4B258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5953692893558000F4B258 /* Assets.xcassets */; };
 		0F59536D2893558000F4B258 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F59536C2893558000F4B258 /* Preview Assets.xcassets */; };
+		0F59537428935F5200F4B258 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59537328935F5200F4B258 /* SignInView.swift */; };
+		0F5953762893653A00F4B258 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953752893653A00F4B258 /* SignUpView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -19,6 +21,8 @@
 		0F5953672893557F00F4B258 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		0F5953692893558000F4B258 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F59536C2893558000F4B258 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		0F59537328935F5200F4B258 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		0F5953752893653A00F4B258 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -53,8 +57,10 @@
 			children = (
 				0F5953652893557F00F4B258 /* chattyApp.swift */,
 				0F5953672893557F00F4B258 /* ContentView.swift */,
+				0F59537328935F5200F4B258 /* SignInView.swift */,
 				0F5953692893558000F4B258 /* Assets.xcassets */,
 				0F59536B2893558000F4B258 /* Preview Content */,
+				0F5953752893653A00F4B258 /* SignUpView.swift */,
 			);
 			path = chatty;
 			sourceTree = "<group>";
@@ -137,6 +143,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0F5953762893653A00F4B258 /* SignUpView.swift in Sources */,
+				0F59537428935F5200F4B258 /* SignInView.swift in Sources */,
 				0F5953682893557F00F4B258 /* ContentView.swift in Sources */,
 				0F5953662893557F00F4B258 /* chattyApp.swift in Sources */,
 			);
