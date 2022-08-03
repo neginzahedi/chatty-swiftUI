@@ -10,9 +10,11 @@ import Firebase
 
 @main
 struct chattyApp: App {
+    
     init(){
         FirebaseApp.configure()
     }
+    
     var body: some Scene {
         WindowGroup {
             HomeView()
