@@ -3,7 +3,7 @@
 //  chatty
 //
 //  Created by Negin Zahedi on 2022-07-28.
-//
+// HomeView has: 1.Imgae 2.Texts 3.sign-up sign-in buttons
 
 import SwiftUI
 
@@ -17,19 +17,21 @@ struct HomeView: View {
             // VStack for all contents inside
             VStack{
                 
-                // Image - top image
+                // Image
                 Image("main-img")
                     .resizable()
                     .scaledToFit()
                     .padding(.bottom, 100)
                 
                 Spacer()
-                // Title
+                
+                // Text
                 Text("Connect Together")
                     .fontWeight(.heavy)
                     .font(.title)
                     .padding()
-                // Body
+                
+                // Text
                 Text("Here in chatty you can talk with your favourite people.")
                     .font(.headline)
                     .fontWeight(.bold)
@@ -37,7 +39,7 @@ struct HomeView: View {
                     .foregroundColor(.gray)
                 Spacer()
                 
-                // Navigation-Button: create account
+                // Button: create account -> SignUpView
                 NavigationLink(destination: SignUpView()){
                     Text("Get Started")
                         .frame(width: 200, height: 50, alignment: .center)
@@ -48,7 +50,7 @@ struct HomeView: View {
                         .padding()
                 }
                 
-                // Navigation-Button: Sign-in to account
+                // Button: Sign-in -> SignInView
                 NavigationLink(destination: SignInView()){
                     Text("Sign In")
                         .foregroundColor(.blue)
