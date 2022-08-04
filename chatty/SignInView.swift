@@ -46,8 +46,11 @@ struct SignInView: View {
                     SecureField("Enter password ...", text: $password)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
-                    Text("Forget password?")
-                        .foregroundColor(.gray)
+                    
+                    NavigationLink(destination: ForgotPasswordView()){
+                        Text("Forget password?")
+                            .foregroundColor(.gray)
+                    }
                 }.padding(5)
                 
             }.padding()
@@ -79,9 +82,7 @@ struct SignInView: View {
         
     }
     
-    func createAccount()->Void{
-        
-    }
+  
 }
 
 
