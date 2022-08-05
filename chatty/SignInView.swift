@@ -6,13 +6,16 @@
 //
 
 import SwiftUI
-import Firebase
+import FirebaseAuth
 
 struct SignInView: View {
     
     @State private var email: String = ""
     @State private var password: String = ""
     
+    @State private var alertMessage: String = ""
+    @State private var signInFaildAlert = false
+
     var body: some View {
       
         VStack(alignment: .center){
@@ -76,13 +79,39 @@ struct SignInView: View {
             }
             
         }.padding()
+        
+        
+    
+            .alert(isPresented: self.$signInFaildAlert,
+                   content: { self.showAlert() })
+        
+            .alert(isPresented: self.$signInFaildAlert,
+                   content: { self.showAlert() })
+        
+         
     }
     
     private func signIn(){
-        
+        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+            
+            if let e = error{
+                print("faled log in")
+                alertMessage = e.localizedDescription
+                signInFaildAlert = true
+                return
+            }
+            
+            print("succesfuly log in")
+            
+        }
     }
     
-  
+    func showAlert()-> Alert{
+        Alert(
+            title: Text("Error"),
+            message: Text(self.alertMessage),
+            dismissButton: .default(Text("Okay")))
+    }
 }
 
 
