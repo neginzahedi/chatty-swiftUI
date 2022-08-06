@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import FirebaseAuth
 
 struct ForgotPasswordView: View {
     @State private var email: String = ""
-
+    
     var body: some View {
-
+        
         VStack{
             
             // Image
@@ -44,7 +45,7 @@ struct ForgotPasswordView: View {
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
                 .padding()
-           
+            
             // Button
             Button("Send", action: sendForgotPasswordLink)
                 .frame(width: 200, height: 50, alignment: .center)
@@ -54,21 +55,24 @@ struct ForgotPasswordView: View {
                 .font(.headline)
                 .padding()
             
-            
         }
-        
-        
     }
     
     // TODO
     private func sendForgotPasswordLink(){
-        
+        Auth.auth().sendPasswordReset(withEmail: "\(email)") { error in
+            if let e = error{
+                print(e)
+            }
+            else{
+                print("link sent")
+            }
+        }
     }
 }
 
 struct ForgotPasswordView_Previews: PreviewProvider {
     static var previews: some View {
         ForgotPasswordView()
-            
     }
 }
