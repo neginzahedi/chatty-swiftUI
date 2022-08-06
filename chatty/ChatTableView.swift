@@ -7,6 +7,12 @@
 
 import SwiftUI
 
+struct UserProfileView: View {
+    var body: some View {
+        Text("")
+    }
+}
+
 struct ChatTableView: View {
     
     @State var showSettingOptions = false
@@ -15,6 +21,7 @@ struct ChatTableView: View {
         NavigationView{
             VStack{
                 // Nav bar: User Profile
+//                UserProfileView()
                 userProfile
                 // ScrollView: Sender Message List
                 sendersList
@@ -50,22 +57,16 @@ struct ChatTableView: View {
             }
             
             Spacer()
-            Button{
-                showSettingOptions.toggle()
-            }label: {
+            
+            NavigationLink(destination: SettingView()){
                 Image(systemName: "gear")
                     .font(.system(size: 24,weight: .bold))
                     .foregroundColor(Color(.label))
-            }
-        }.padding()
-            .actionSheet(isPresented: $showSettingOptions) {
-                .init(title: Text("Settings"),buttons: [.destructive(Text("Sign Out"),action: {
-                    // TODO: Signout
                     
-                }),
-                                                        .cancel()
-                                                       ])
             }
+            
+        }.padding()
+           
     }
     
     // ScrollView: Senders List
