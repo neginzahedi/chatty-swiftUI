@@ -8,8 +8,63 @@
 import SwiftUI
 
 struct EditProfileView: View {
+    
+    @State private var name: String = ""
+    @State private var email: String = ""
+    @State private var status: String = ""
+    @State private var password: String = ""
+    
     var body: some View {
-        Text("edit profile")
+        
+        NavigationView{
+            
+            VStack{
+              
+                Image("main-img")
+                    .resizable()
+                    .scaledToFit()
+                    .padding()
+                
+                List{
+                    
+                    Section{
+                        HStack{
+                            Text("Name")
+                            Spacer()
+                            Spacer()
+                            TextField("Name", text: $name)
+                        }
+                        
+                        HStack{
+                            Text("Email address")
+                            Spacer()
+                            Spacer()
+                            TextField("Email address", text: $email)
+                        }
+                        
+                        HStack{
+                            Text("Status")
+                            Spacer()
+                            Spacer()
+                            TextField("Status", text: $status)
+                        }
+                    }
+                    
+                    Section{
+                        NavigationLink {
+                            ChangepasswordView()
+                        } label: {
+                            Text("Password")
+                        }
+                    }
+                  
+                }.listStyle(InsetGroupedListStyle())
+                    .environment(\.horizontalSizeClass, .regular)
+                    .navigationTitle("Edit Profile")
+                
+            }
+        }
+
     }
 }
 
