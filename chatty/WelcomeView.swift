@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HomeView: View {
+struct WelcomeView: View {
     
     var body: some View {
         
@@ -18,7 +18,7 @@ struct HomeView: View {
             VStack{
                 
                 // Image
-                Image("main-img")
+                Image("smile")
                     .resizable()
                     .scaledToFit()
                     .padding(.bottom, 100)
@@ -32,7 +32,7 @@ struct HomeView: View {
                     .padding()
                 
                 // Text
-                Text("Here in chatty you can talk with your favourite people.")
+                Text("Here in chatty, you can talk with your favourite people.")
                     .font(.headline)
                     .fontWeight(.bold)
                     .multilineTextAlignment(.center)
@@ -65,6 +65,6 @@ struct HomeView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        HomeView()
+        WelcomeView()
     }
 }

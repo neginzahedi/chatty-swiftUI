@@ -13,7 +13,7 @@
 		0F51ED742894781B00E71017 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0F51ED732894781B00E71017 /* FirebaseFirestore */; };
 		0F51ED762894781B00E71017 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0F51ED752894781B00E71017 /* FirebaseStorage */; };
 		0F5953662893557F00F4B258 /* chattyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953652893557F00F4B258 /* chattyApp.swift */; };
-		0F5953682893557F00F4B258 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953672893557F00F4B258 /* HomeView.swift */; };
+		0F5953682893557F00F4B258 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953672893557F00F4B258 /* WelcomeView.swift */; };
 		0F59536A2893558000F4B258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5953692893558000F4B258 /* Assets.xcassets */; };
 		0F59536D2893558000F4B258 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F59536C2893558000F4B258 /* Preview Assets.xcassets */; };
 		0F59537428935F5200F4B258 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59537328935F5200F4B258 /* SignInView.swift */; };
@@ -32,7 +32,7 @@
 		0F51ED6E2894775900E71017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0F5953622893557F00F4B258 /* chatty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5953652893557F00F4B258 /* chattyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chattyApp.swift; sourceTree = "<group>"; };
-		0F5953672893557F00F4B258 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		0F5953672893557F00F4B258 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
 		0F5953692893558000F4B258 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		0F59536C2893558000F4B258 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0F59537328935F5200F4B258 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
@@ -80,9 +80,10 @@
 			isa = PBXGroup;
 			children = (
 				0F5953652893557F00F4B258 /* chattyApp.swift */,
-				0F5953672893557F00F4B258 /* HomeView.swift */,
+				0F5953672893557F00F4B258 /* WelcomeView.swift */,
 				0F5953752893653A00F4B258 /* SignUpView.swift */,
 				0F59537328935F5200F4B258 /* SignInView.swift */,
+				0FF68E3E28A30ED300AE3FDA /* MainView.swift */,
 				0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */,
 				0F22A2212896FC7900012C08 /* ChatTableView.swift */,
 				0F7C2578289C7F660062EC25 /* ChatView.swift */,
@@ -186,12 +187,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0F5953762893653A00F4B258 /* SignUpView.swift in Sources */,
+				0FF68E3F28A30ED300AE3FDA /* MainView.swift in Sources */,
 				0F22A2222896FC7900012C08 /* ChatTableView.swift in Sources */,
 				0F5D0FE028A1AC5000C5EE65 /* userModel.swift in Sources */,
 				0FF1D94C289DC3CF00D7C5EF /* EditProfileView.swift in Sources */,
 				0FF1D94E289DC44500D7C5EF /* SettingView.swift in Sources */,
 				0F59537428935F5200F4B258 /* SignInView.swift in Sources */,
-				0F5953682893557F00F4B258 /* HomeView.swift in Sources */,
+				0F5953682893557F00F4B258 /* WelcomeView.swift in Sources */,
 				0FF68E3D28A2BE0700AE3FDA /* ChangepasswordView.swift in Sources */,
 				0FF68E3B28A2B8A400AE3FDA /* ImagePicker.swift in Sources */,
 				0F7C2579289C7F660062EC25 /* ChatView.swift in Sources */,
