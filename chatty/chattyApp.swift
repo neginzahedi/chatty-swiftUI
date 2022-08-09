@@ -17,7 +17,7 @@ struct chattyApp: App {
     
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            WelcomeView()
         }
     }
 }
