@@ -38,6 +38,8 @@ struct SignInView: View {
                     TextField("Enter email ...", text: $email)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
+                        .autocapitalization(.none)
+                        .keyboardType(.emailAddress)
                         
                 }.padding(5)
                 
@@ -47,7 +49,6 @@ struct SignInView: View {
                         .font(.callout)
                         .bold()
                     SecureField("Enter password ...", text: $password)
-                        .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                     
                     NavigationLink(destination: ForgotPasswordView()){
