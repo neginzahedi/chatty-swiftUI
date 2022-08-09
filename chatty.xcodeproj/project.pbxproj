@@ -25,6 +25,7 @@
 		0FF1D94E289DC44500D7C5EF /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF1D94D289DC44500D7C5EF /* SettingView.swift */; };
 		0FF68E3B28A2B8A400AE3FDA /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */; };
 		0FF68E3D28A2BE0700AE3FDA /* ChangepasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF68E3C28A2BE0700AE3FDA /* ChangepasswordView.swift */; };
+		0FF68E3F28A30ED300AE3FDA /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF68E3E28A30ED300AE3FDA /* MainView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -44,6 +45,7 @@
 		0FF1D94D289DC44500D7C5EF /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
 		0FF68E3C28A2BE0700AE3FDA /* ChangepasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangepasswordView.swift; sourceTree = "<group>"; };
+		0FF68E3E28A30ED300AE3FDA /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
