@@ -25,8 +25,7 @@ struct MainView: View {
                     Label("Settings", systemImage: "gear" )
                 }.tag(1)
             
-        }.navigationTitle(selection == 1 ? "Settings" : "Chats")
-        
+        }
     }
 }
 
