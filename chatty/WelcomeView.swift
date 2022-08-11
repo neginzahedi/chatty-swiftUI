@@ -9,56 +9,66 @@ import SwiftUI
 
 struct WelcomeView: View {
     
+    @State private var isSignUpSheet = false
+    @State private var isSignInSheet = false
+    
     var body: some View {
         
-        // Main Page Navigation
-        NavigationView {
+        
+        VStack{
             
-            // VStack for all contents inside
-            VStack{
-                
-                // Image
-                Image("smile")
-                    .resizable()
-                    .scaledToFit()
-                    .padding(.bottom, 100)
-                
-                Spacer()
-                
-                // Text
-                Text("Connect Together")
-                    .fontWeight(.heavy)
-                    .font(.title)
-                    .padding()
-                
-                // Text
-                Text("Here in chatty, you can talk with your favourite people.")
+            // Image
+            Image("smile")
+                .resizable()
+                .scaledToFit()
+                .padding()
+            
+            Spacer()
+            
+            // Text
+            Text("Connect Together")
+                .fontWeight(.heavy)
+                .font(.title)
+                .padding()
+            
+            // Text
+            Text("Here in chatty, you can talk with your favourite people.")
+                .font(.headline)
+                .fontWeight(.bold)
+                .multilineTextAlignment(.center)
+                .foregroundColor(.gray)
+            
+            Spacer()
+            
+            // Button: Display SignUpView
+            Button {
+                isSignUpSheet = true
+            } label: {
+                Text("Get Started")
+                    .frame(width: 200, height: 50, alignment: .center)
+                    .background(.blue)
+                    .clipShape(Capsule())
+                    .foregroundColor(.white)
                     .font(.headline)
-                    .fontWeight(.bold)
-                    .multilineTextAlignment(.center)
-                    .foregroundColor(.gray)
-                Spacer()
-                
-                // Button: create account -> SignUpView
-                NavigationLink(destination: SignUpView()){
-                    Text("Get Started")
-                        .frame(width: 200, height: 50, alignment: .center)
-                        .background(.blue)
-                        .clipShape(Capsule())
-                        .foregroundColor(.white)
-                        .font(.headline)
-                        .padding()
-                }
-                
-                // Button: Sign-in -> SignInView
-                NavigationLink(destination: SignInView()){
-                    Text("Sign In")
-                        .foregroundColor(.blue)
-                        .font(.headline)
-                        .padding()
-                }
-                
+                    .padding()
             }
+            
+            // Button: Display SignInView
+            Button {
+                isSignInSheet = true
+            } label: {
+                Text("Sign In")
+                    .foregroundColor(.blue)
+                    .font(.headline)
+                    .padding()
+            }
+        }
+        .padding()
+        .fullScreenCover(isPresented: $isSignUpSheet, content: {
+            SignUpView()
+        })
+        .fullScreenCover(isPresented: $isSignInSheet) {
+            SignInView()
         }
     }
 }
