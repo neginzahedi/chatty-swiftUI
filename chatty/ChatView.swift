@@ -9,44 +9,25 @@ import SwiftUI
 
 struct ChatView: View {
     
-    struct chatMessage{
-        let sender: String
-        let date: Date
-        let body: String
-    }
-    
     var body: some View {
         VStack{
-            ChatTopView()
             ChatBody()
             ChatBottomView()
             
- 
         }
-        .navigationTitle("Reciever name")
-        .navigationBarTitleDisplayMode(.inline)
-        .navigationBarBackButtonHidden(true)
-    }
-}
-
-struct ChatTopView: View{
-    var body: some View{
-        HStack{
-            Image(systemName: "chevron.left")
-                .foregroundColor(.blue)
-            HStack{
-                Image(systemName: "person.crop.circle.fill")
-                    .resizable()
-                    .frame(width: 40, height: 40)
-                    .foregroundColor(.secondary)
-                Text("Reciever name")
-                    .font(.footnote)
+        .toolbar {
+            ToolbarItem(placement: .principal) {
+                HStack {
+                    Image(systemName: "person.crop.circle.fill")
+                        .resizable()
+                        .frame(width: 40, height: 40)
+                        .foregroundColor(.secondary)
+                    Text("Reciever's Name")
+                }
             }
-            Spacer()
-           
-        }.padding()
-            .background(Color.gray.opacity(0.1))
+        }
     }
+    
 }
 
 struct ChatBody: View{
@@ -77,7 +58,7 @@ struct ChatBody: View{
 struct ChatBottomView: View{
     
     @State private var message: String = ""
-
+    
     var body: some View{
         HStack{
             Image(systemName: "photo.on.rectangle.angled")
