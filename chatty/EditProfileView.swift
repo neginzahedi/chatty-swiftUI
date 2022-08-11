@@ -16,56 +16,56 @@ struct EditProfileView: View {
     
     var body: some View {
         
-        NavigationView{
+        
+        VStack{
             
-            VStack{
-              
-                Image("main-img")
-                    .resizable()
-                    .scaledToFit()
-                    .padding()
+            Image("main-img")
+                .resizable()
+                .scaledToFit()
+                .padding()
+            
+            List{
                 
-                List{
-                    
-                    Section{
-                        HStack{
-                            Text("Name")
-                            Spacer()
-                            Spacer()
-                            TextField("Name", text: $name)
-                        }
-                        
-                        HStack{
-                            Text("Email address")
-                            Spacer()
-                            Spacer()
-                            TextField("Email address", text: $email)
-                        }
-                        
-                        HStack{
-                            Text("Status")
-                            Spacer()
-                            Spacer()
-                            TextField("Status", text: $status)
-                        }
+                Section{
+                    HStack{
+                        Text("Name")
+                        Spacer()
+                        Spacer()
+                        TextField("Name", text: $name)
                     }
                     
-                    Section{
-                        NavigationLink {
-                            ChangepasswordView()
-                        } label: {
-                            Text("Password")
-                        }
+                    HStack{
+                        Text("Email address")
+                        Spacer()
+                        Spacer()
+                        TextField("Email address", text: $email)
                     }
-                  
-                }.listStyle(InsetGroupedListStyle())
-                    .environment(\.horizontalSizeClass, .regular)
-                    .navigationTitle("Edit Profile")
+                    
+                    HStack{
+                        Text("Status")
+                        Spacer()
+                        Spacer()
+                        TextField("Status", text: $status)
+                    }
+                }
                 
-            }
+                Section{
+                    NavigationLink {
+                        ChangepasswordView()
+                    } label: {
+                        Text("Password")
+                    }
+                }
+                
+            }.listStyle(InsetGroupedListStyle())
+                .environment(\.horizontalSizeClass, .regular)
+                .navigationTitle("Edit Profile")
+                .navigationBarItems(trailing: Text("Save"))
+            
         }
-
     }
+    
+    
 }
 
 struct EditProfileView_Previews: PreviewProvider {
