@@ -16,7 +16,7 @@ struct ForgotPasswordView: View {
         VStack{
             
             // Image
-            Image("question-face")
+            Image("question")
                 .resizable()
                 .scaledToFit()
                 .padding()
