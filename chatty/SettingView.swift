@@ -57,10 +57,12 @@ struct SettingView: View {
                 }
             }.listStyle(InsetGroupedListStyle())
                 .environment(\.horizontalSizeClass, .regular)
-                .navigationTitle("Setting")
-            
+                .navigationTitle("Settings")
+
         }
-    }
+            }
+        
+    
 }
 
 struct SettingView_Previews: PreviewProvider {
