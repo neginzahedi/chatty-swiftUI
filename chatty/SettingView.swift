@@ -4,17 +4,17 @@
 //
 //  Created by Negin Zahedi on 2022-08-05.
 //
+// SettingView has two section. One is for user profile setting, other options are for sharing link and about me. (NOT DECIDED YET)
+//
+// NOTES: Desihn is completed.
 
 import SwiftUI
 
 struct SettingView: View {
-    
     var body: some View {
-        
         NavigationView{
             List {
-                
-                //user profile
+                // SECTION USER PROFILE
                 Section {
                     NavigationLink(destination: EditProfileView()){
                         HStack(spacing: 20){
@@ -37,15 +37,22 @@ struct SettingView: View {
                     }
                 }
                 
-                // Other options
+                // SECTION OTHER OPTIONS
                 Section {
-                    NavigationLink(destination:EmptyView()){
+                    // TELL A FRIEND
+                    // share a link
+                    Button {
+                        let url = URL(string: "https://neginzahedi.com")
+                        let activityController = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
+                        UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)
+                    } label: {
                         HStack(spacing: 20){
                             Image(systemName: "heart.fill")
                             Text("Tell a Friend")
-                        }.padding()
-                    }
+                        }.foregroundColor(.primary)
+                    }.padding()
                     
+                    // TODO: ABOUT ME
                     NavigationLink(destination: EmptyView()){
                         HStack(spacing: 20){
                             Image(systemName: "info")
@@ -53,16 +60,13 @@ struct SettingView: View {
                         }.padding()
                     }
                     
-                    
                 }
             }.listStyle(InsetGroupedListStyle())
                 .environment(\.horizontalSizeClass, .regular)
                 .navigationTitle("Settings")
-
+            
         }
-            }
-        
-    
+    }
 }
 
 struct SettingView_Previews: PreviewProvider {
