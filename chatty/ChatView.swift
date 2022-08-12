@@ -34,7 +34,7 @@ struct ChatView: View {
     }
 }
 
-// contains all messages which retrieves from firestore
+// ChatBodyScrollView: contains all messages which retrieves from firestore
 struct ChatBodyScrollView: View{
     var body: some View {
         ScrollView{
@@ -86,7 +86,6 @@ struct ChatBottomView: View{
         
     }
 }
-
 
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
