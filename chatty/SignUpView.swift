@@ -7,6 +7,8 @@
 // Notes:
 // SignUpView is for creating new account while checking requirements.
 
+//TODO: Display MainView() if successfully created acount
+
 import SwiftUI
 import Firebase
 
