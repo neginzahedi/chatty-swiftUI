@@ -4,152 +4,145 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-// SignUpView has: 1.Image 2.Text 3.TextField 4.Buttons
+// Notes:
+// SignUpView is for creating new account while checking requirements.
 
 import SwiftUI
 import Firebase
 
 struct SignUpView: View {
     
+    // Dismiss current view
+    @Environment(\.presentationMode) var presentationMode
+    
+    // String states for User inputes
     @State private var username: String = ""
     @State private var email: String = ""
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     
+    // Boolean state that determines whether the alert should be visible
     @State private var alertMessage: String = ""
-    
-    @State private var confirmPassAlert = false
-    @State private var accountFaildAlert = false
-    @State private var accountcreatedAlert = false
+    @State private var isConfirmPassNotSameAlert = false
+    @State private var isCreateAccountFaildAlert = false
     
     
     var body: some View {
         
-        // Vertical Contents
+        // Vstack: all contents
         VStack(alignment: .center){
+            // Image
             Image("signup-view-img")
                 .resizable()
                 .scaledToFit()
                 .frame(height: 80)
             
-            // VStack - Sign-up Field
+            // VStack: Sign-up Field
             VStack(alignment: .leading){
-                // Text
+                
+                // Title
                 Text("Sign-up")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                // VStack - username
+                // VStack: username
                 VStack(alignment: .leading){
-                    // Text
                     Text("Username")
                         .font(.callout)
                         .bold()
-                    // TextField
                     TextField("Enter username...", text: $username)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
                 
-                // VStack - email address
+                // VStack: email address
                 VStack(alignment: .leading){
-                    // Text
                     Text("Email")
                         .font(.callout)
                         .bold()
-                    // TextField
                     TextField("Enter email address...", text: $email)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
                 
-                // VStack - password and confirmation
+                // VStack: password
                 VStack(alignment: .leading){
-                    // Text
                     Text("Password")
                         .font(.callout)
                         .bold()
-                    // SecureField
                     SecureField("Enter password...", text: $password)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
-                    
                 }.padding(5)
                 
-                // VStack - confirm password
+                // VStack: confirm password
                 VStack(alignment: .leading){
-                    // Text
                     Text("Confirm Password")
                         .font(.callout)
                         .bold()
-                    // SecureField
                     SecureField("Enter password again...", text: $confirmPassword)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
             }.padding()
-            // end of sign-up field
+            // END - sign-up VStack
             
-            // Button: Sign-up
-            Button("Sign Up", action: createAccount)
-                .frame(width: 200, height: 50, alignment: .center)
-                .background(.blue)
-                .clipShape(Capsule())
-                .foregroundColor(.white)
-                .font(.headline)
-                .padding()
+            // Button: to create account
+            Button {
+                createAccount()
+            } label: {
+                Text("Sign Up")
+                    .frame(width: 200, height: 50, alignment: .center)
+                    .background(.blue)
+                    .clipShape(Capsule())
+                    .foregroundColor(.white)
+                    .font(.headline)
+                    .padding()
+            }
             
-            // HStack - sign in
+            // HStack: to dismiss current view and display welcomeView() again
             HStack(alignment:.center){
-                // Text
                 Text("I already have an account.")
-                // NavigationLink
-                NavigationLink(destination: SignInView()){
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                } label: {
                     Text("Sign-in")
                         .foregroundColor(.gray)
                 }
             }
-            
         }.padding()
-        // end of content field
+        // END - all contents Vstack
         
-            .alert("The password confirmation does not match.", isPresented: $confirmPassAlert) {
-                Button("Cancel", role: .cancel) { }
+        // Alerts:
+        // alert when password and confirm password are not same
+            .alert("The password confirmation does not match.", isPresented: $isConfirmPassNotSameAlert) {
+                Button("Ok", role: .cancel) { }
             }
-        
-            .alert(isPresented: self.$accountFaildAlert,
-                   content: { self.showAlert() })
-        
-            .alert(isPresented: self.$accountFaildAlert,
-                   content: { self.showAlert() })
-        
-            .alert(isPresented: self.$accountcreatedAlert,
-                   content: { self.showAlert() })
+        // alert when faild to create account
+            .alert(alertMessage, isPresented: $isCreateAccountFaildAlert){
+                Button("Ok", role: .cancel) {}
+            }
     }
     
+    // to create user account on Firebase using createUser method or display alerts if it goes wrong
     private func createAccount(){
+        // if password and confirm password are same
         if password == confirmPassword{
             Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
                 if let e = error{
+                    // if faild to create user account
                     self.alertMessage = "\(e.localizedDescription)"
-                    accountFaildAlert = true
-                    
+                    isCreateAccountFaildAlert = true
                 }else{
-                    self.alertMessage = "Account created!"
-                    accountcreatedAlert = true
+                    // if user account successfully created
+                    // TODO: go to MainView
+                    print("Account created!")
                 }
             }
         } else{
-            self.alertMessage = "The password confirmation does not match."
-            self.confirmPassAlert = true
+            // if password and confirm password are not same
+            self.isConfirmPassNotSameAlert = true
         }
-    }
-    
-    func showAlert()-> Alert{
-        Alert(
-            title: Text("Error"),
-            message: Text(self.alertMessage),
-            dismissButton: .default(Text("Okay")))
     }
 }
 
