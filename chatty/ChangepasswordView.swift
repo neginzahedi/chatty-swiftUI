@@ -4,6 +4,9 @@
 //
 //  Created by Negin Zahedi on 2022-08-09.
 //
+// ChangepasswordView is to change password when user is loged in
+//
+// TODO: change password is not working
 
 import SwiftUI
 
@@ -15,30 +18,28 @@ struct ChangepasswordView: View {
     
     
     var body: some View {
-        
         VStack{
-            
             Text("A secure password must be at least six characters and a combination of letters, numbers and special symbols.")
                 .foregroundColor(.gray)
                 .padding()
-            
             Spacer()
-            
             List{
-                
                 TextField("Enter Current Password", text: $currentPassword)
                 TextField("Enter New Password", text: $newPassword)
                 TextField("Enter New Password Again", text: $newPasswordAgain)
-                
             }
-            
         }
         
         .navigationBarTitle(Text("Change Password"), displayMode: .inline)
+        // TODO: change to toolbar
         .navigationBarItems(trailing: Text("Save"))
         
     }
     
+    // change password is not working
+    private func changePassword(){
+        
+    }
 }
 
 struct ChangepasswordView_Previews: PreviewProvider {
