@@ -10,40 +10,48 @@ import FirebaseAuth
 
 struct SignInView: View {
     
+    // to dismiss current view
+    @Environment(\.presentationMode) var presentationMode
+    
+    // String State for user inputes
     @State private var email: String = ""
     @State private var password: String = ""
     
     @State private var alertMessage: String = ""
-    @State private var signInFaildAlert = false
-
+    
+    // Boolean state that determines whether the alert should be visible
+    @State private var isSignInFaildAlert = false
+    
     var body: some View {
-      
+        
+        // Vstack: all contents
         VStack(alignment: .center){
             Image("signin-view-img")
                 .resizable()
                 .scaledToFit()
                 .padding(.bottom,50)
             
-            // Sign-up VStack
+            // VStack: SignIn Field
             VStack(alignment: .leading){
                 Text("Sign-In")
                     .font(.largeTitle)
                     .fontWeight(.bold)
                 
-                // username
+                // Vstack: to enter Email
                 VStack(alignment: .leading){
+                    // label
                     Text("Email")
                         .font(.callout)
                         .bold()
+                    // input
                     TextField("Enter email ...", text: $email)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
-                        
                 }.padding(5)
                 
-                // password and confirmation
+                // Vstack: to enter password
                 VStack(alignment: .leading){
                     Text("Password")
                         .font(.callout)
@@ -68,50 +76,44 @@ struct SignInView: View {
                 .foregroundColor(.white)
                 .font(.headline)
                 .padding()
+            
             // sign up
             HStack(alignment:.center){
-                
                 Text("Don't have an account?")
-                NavigationLink(destination: SignUpView()){
+                Button {
+                    presentationMode.wrappedValue.dismiss()
+                    
+                } label: {
                     Text("Sign-up")
                         .foregroundColor(.gray)
                 }
-                
             }
-            
         }.padding()
         
+        // Alerts:
+        // Display alert if faild to sign in
+            .alert(alertMessage, isPresented: $isSignInFaildAlert) {
+                Button("Ok", role: .cancel) {}
+            }
+  
         
-    
-            .alert(isPresented: self.$signInFaildAlert,
-                   content: { self.showAlert() })
         
-            .alert(isPresented: self.$signInFaildAlert,
-                   content: { self.showAlert() })
-        
-         
     }
     
+    // method to sign in user by using firebase signIn method or display alert if fails
     private func signIn(){
         Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
             
             if let e = error{
-                print("faled log in")
-                alertMessage = e.localizedDescription
-                signInFaildAlert = true
+                print("failed log in")
+                self.alertMessage = e.localizedDescription
+                self.isSignInFaildAlert = true
                 return
             }
             
             print("succesfuly log in")
             
         }
-    }
-    
-    func showAlert()-> Alert{
-        Alert(
-            title: Text("Error"),
-            message: Text(self.alertMessage),
-            dismissButton: .default(Text("Okay")))
     }
 }
 
