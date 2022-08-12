@@ -4,18 +4,26 @@
 //
 //  Created by Negin Zahedi on 2022-08-04.
 //
+// TODO: reset password link works but goes to spam right now
 
 import SwiftUI
 import FirebaseAuth
 
 struct ForgotPasswordView: View {
+    
+    // String State for user input
     @State private var email: String = ""
+    
+    @State private var alertMessage: String = ""
+    
+    // Boolean state that determines whether the alert should be visible
+    @State private var isSendLinkFailedAlert = false
+    @State private var isSendLinkSuccessfulAlert = false
     
     var body: some View {
         
         VStack{
             
-            // Image
             Image("question")
                 .resizable()
                 .scaledToFit()
@@ -23,14 +31,12 @@ struct ForgotPasswordView: View {
             
             Spacer()
             
-            // Title
             Text("Did someone forget their password?")
                 .fontWeight(.heavy)
                 .font(.title)
                 .multilineTextAlignment(.center)
                 .padding()
             
-            // Text
             Text("Thats ok! Enter your email and we will send you a link to reset your password.")
                 .font(.headline)
                 .fontWeight(.bold)
@@ -40,14 +46,14 @@ struct ForgotPasswordView: View {
             
             Spacer()
             
-            // Text Field
+            // Text Field: Email
             TextField("Enter email ...", text: $email)
                 .disableAutocorrection(true)
                 .textFieldStyle(.roundedBorder)
                 .padding()
             
-            // Button
-            Button("Send", action: sendForgotPasswordLink)
+            // Button: to send Reset Password link
+            Button("Send", action: sendResetPasswordLink)
                 .frame(width: 200, height: 50, alignment: .center)
                 .background(.blue)
                 .clipShape(Capsule())
@@ -56,16 +62,29 @@ struct ForgotPasswordView: View {
                 .padding()
             
         }
+        
+        // Alerts:
+        // alert when faild to send link
+        .alert(alertMessage, isPresented: $isSendLinkFailedAlert) {
+            Button("Ok", role: .cancel) {}
+        }
+        // alert when link sent
+        .alert(alertMessage, isPresented: $isSendLinkSuccessfulAlert) {
+            Button("Ok", role: .cancel) {}
+        }
     }
     
-    // TODO
-    private func sendForgotPasswordLink(){
+    //TODO: reset password link works but goes to spam right now
+    // sendPasswordReset method of Firebase,send reset password link to user email address
+    private func sendResetPasswordLink(){
         Auth.auth().sendPasswordReset(withEmail: "\(email)") { error in
             if let e = error{
-                print(e)
+                self.alertMessage = e.localizedDescription
+                self.isSendLinkFailedAlert = true
             }
             else{
-                print("link sent")
+                self.alertMessage = "Reset password link is sent to the eamil address."
+                self.isSendLinkSuccessfulAlert = true
             }
         }
     }
