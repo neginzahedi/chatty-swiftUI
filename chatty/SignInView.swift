@@ -4,6 +4,10 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
+// NOTES:
+// SignInView to sign in to existing account and display allerts if it goes wrong.
+
+//TODO: Display MainView() if successfully signed in
 
 import SwiftUI
 import FirebaseAuth
@@ -110,9 +114,8 @@ struct SignInView: View {
                 self.isSignInFaildAlert = true
                 return
             }
-            
+            //TODO: go to MainView()
             print("succesfuly log in")
-            
         }
     }
 }
