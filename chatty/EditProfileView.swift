@@ -4,6 +4,10 @@
 //
 //  Created by Negin Zahedi on 2022-08-05.
 //
+// EditProfileView contains user's saved name, email address, status and Password which can be changed as well.
+//
+// TODO: save changes user make
+// replace placeholders with current info
 
 import SwiftUI
 
@@ -12,20 +16,16 @@ struct EditProfileView: View {
     @State private var name: String = ""
     @State private var email: String = ""
     @State private var status: String = ""
-    @State private var password: String = ""
     
     var body: some View {
-        
-        
         VStack{
-            
             Image("main-img")
                 .resizable()
                 .scaledToFit()
                 .padding()
             
             List{
-                
+                // TODO: Current User info Section
                 Section{
                     HStack{
                         Text("Name")
@@ -33,14 +33,12 @@ struct EditProfileView: View {
                         Spacer()
                         TextField("Name", text: $name)
                     }
-                    
                     HStack{
                         Text("Email address")
                         Spacer()
                         Spacer()
                         TextField("Email address", text: $email)
                     }
-                    
                     HStack{
                         Text("Status")
                         Spacer()
@@ -49,6 +47,7 @@ struct EditProfileView: View {
                     }
                 }
                 
+                // Password Section: navigates to ChangepasswordView
                 Section{
                     NavigationLink {
                         ChangepasswordView()
