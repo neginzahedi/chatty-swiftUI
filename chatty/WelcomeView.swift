@@ -3,18 +3,21 @@
 //  chatty
 //
 //  Created by Negin Zahedi on 2022-07-28.
-// HomeView has: 1.Imgae 2.Texts 3.sign-up sign-in buttons
+//
+// NOTES:
+// HomeView is used to display SignInView()/SignUpView() by using fullScreenCover
 
 import SwiftUI
 
 struct WelcomeView: View {
     
+    // variables to display sign-up/sign-in views if true
     @State private var isSignUpScreen = false
     @State private var isSignInScreen = false
     
     var body: some View {
         
-        
+        // Vstack: All contents
         VStack{
             
             // Image
@@ -62,18 +65,19 @@ struct WelcomeView: View {
                     .font(.headline)
                     .padding()
             }
-        }
-        .padding()
+        }.padding()
+        // END of Vstack
         
+        
+        // fullScreenCover: used to display SignUpView() and SignInView()
         // when isSignUpScreen is true, SignUpView() shows up
-        .fullScreenCover(isPresented: $isSignUpScreen){
-            SignUpView()
-        }
-        
+            .fullScreenCover(isPresented: $isSignUpScreen){
+                SignUpView()
+            }
         // when isSignInScreen is true, SignInView() shows up
-        .fullScreenCover(isPresented: $isSignInScreen) {
-            SignInView()
-        }
+            .fullScreenCover(isPresented: $isSignInScreen) {
+                SignInView()
+            }
     }
 }
 
