@@ -9,8 +9,8 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    @State private var isSignUpSheet = false
-    @State private var isSignInSheet = false
+    @State private var isSignUpScreen = false
+    @State private var isSignInScreen = false
     
     var body: some View {
         
@@ -40,9 +40,9 @@ struct WelcomeView: View {
             
             Spacer()
             
-            // Button: Display SignUpView
+            // Button: to display SignUpView
             Button {
-                isSignUpSheet = true
+                isSignUpScreen = true
             } label: {
                 Text("Get Started")
                     .frame(width: 200, height: 50, alignment: .center)
@@ -53,9 +53,9 @@ struct WelcomeView: View {
                     .padding()
             }
             
-            // Button: Display SignInView
+            // Button: to display SignInView
             Button {
-                isSignInSheet = true
+                isSignInScreen = true
             } label: {
                 Text("Sign In")
                     .foregroundColor(.blue)
@@ -64,10 +64,14 @@ struct WelcomeView: View {
             }
         }
         .padding()
-        .fullScreenCover(isPresented: $isSignUpSheet, content: {
+        
+        // when isSignUpScreen is true, SignUpView() shows up
+        .fullScreenCover(isPresented: $isSignUpScreen){
             SignUpView()
-        })
-        .fullScreenCover(isPresented: $isSignInSheet) {
+        }
+        
+        // when isSignInScreen is true, SignInView() shows up
+        .fullScreenCover(isPresented: $isSignInScreen) {
             SignInView()
         }
     }
