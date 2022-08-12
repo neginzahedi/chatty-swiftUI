@@ -4,27 +4,24 @@
 //
 //  Created by Negin Zahedi on 2022-08-09.
 //
+// MainView is a TabView() to easily switch between ChatTableView() and SettingView()
+//
+//TODO:
 
 import SwiftUI
 
 struct MainView: View {
-    
-    @State var selection = 1
-    
     var body: some View {
-        
-        TabView(selection: $selection){
-            
+        TabView(){
             ChatTableView()
                 .tabItem {
                     Label("Chats", systemImage: "message.fill" )
-                }.tag(2)
+                }
             
             SettingView()
                 .tabItem {
                     Label("Settings", systemImage: "gear" )
-                }.tag(1)
-            
+                }
         }
     }
 }
