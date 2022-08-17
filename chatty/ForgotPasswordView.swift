@@ -11,6 +11,9 @@ import FirebaseAuth
 
 struct ForgotPasswordView: View {
     
+    // to dismiss current view
+    @Environment(\.presentationMode) var presentationMode
+    
     // String State for user input
     @State private var email: String = ""
     
@@ -60,6 +63,10 @@ struct ForgotPasswordView: View {
                 .foregroundColor(.white)
                 .font(.headline)
                 .padding()
+            
+            Button("Back to Sign-In") {
+                presentationMode.wrappedValue.dismiss()
+            }.foregroundColor(.gray)
             
         }
         
