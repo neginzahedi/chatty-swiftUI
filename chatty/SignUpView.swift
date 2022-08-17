@@ -28,26 +28,19 @@ struct SignUpView: View {
     @State private var isConfirmPassNotSameAlert = false
     @State private var isCreateAccountFaildAlert = false
     
-    
     var body: some View {
-        
-        // Vstack: all contents
         VStack(alignment: .center){
-            // Image
             Image("signup-view-img")
                 .resizable()
                 .scaledToFit()
                 .frame(height: 80)
             
-            // VStack: Sign-up Field
+            // Sign-up Field
             VStack(alignment: .leading){
-                
-                // Title
                 Text("Sign-up")
                     .font(.largeTitle)
                     .fontWeight(.bold)
-                
-                // VStack: username
+                // username
                 VStack(alignment: .leading){
                     Text("Username")
                         .font(.callout)
@@ -56,8 +49,7 @@ struct SignUpView: View {
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
-                
-                // VStack: email address
+                // email address
                 VStack(alignment: .leading){
                     Text("Email")
                         .font(.callout)
@@ -66,8 +58,7 @@ struct SignUpView: View {
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
-                
-                // VStack: password
+                // password
                 VStack(alignment: .leading){
                     Text("Password")
                         .font(.callout)
@@ -76,8 +67,7 @@ struct SignUpView: View {
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
-                
-                // VStack: confirm password
+                // confirm password
                 VStack(alignment: .leading){
                     Text("Confirm Password")
                         .font(.callout)
@@ -87,9 +77,9 @@ struct SignUpView: View {
                         .textFieldStyle(.roundedBorder)
                 }.padding(5)
             }.padding()
-            // END - sign-up VStack
+            // END Sign-up
             
-            // Button: to create account
+            // create account
             Button {
                 createAccount()
             } label: {
@@ -101,8 +91,7 @@ struct SignUpView: View {
                     .font(.headline)
                     .padding()
             }
-            
-            // HStack: to dismiss current view and display welcomeView() again
+            // dismiss current view and display welcomeView() again
             HStack(alignment:.center){
                 Text("I already have an account.")
                 Button {
@@ -113,14 +102,14 @@ struct SignUpView: View {
                 }
             }
         }.padding()
-        // END - all contents Vstack
+        // END contents
         
         // Alerts:
-        // alert when password and confirm password are not same
+        // when password and confirm password are not same
             .alert("The password confirmation does not match.", isPresented: $isConfirmPassNotSameAlert) {
                 Button("Ok", role: .cancel) { }
             }
-        // alert when faild to create account
+        // when faild to create account
             .alert(alertMessage, isPresented: $isCreateAccountFaildAlert){
                 Button("Ok", role: .cancel) {}
             }
@@ -137,7 +126,6 @@ struct SignUpView: View {
                     isCreateAccountFaildAlert = true
                 }else{
                     // if user account successfully created
-                    // TODO: go to MainView
                     print("Account created!")
                 }
             }
