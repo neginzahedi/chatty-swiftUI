@@ -11,39 +11,28 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    // variables to display sign-up/sign-in views if true
+    // Boolean states to display fullScreenCover if true
     @State private var isSignUpScreen = false
     @State private var isSignInScreen = false
     
     var body: some View {
-        
-        // Vstack: All contents
         VStack{
-            
-            // Image
             Image("smile")
                 .resizable()
                 .scaledToFit()
                 .padding()
-            
             Spacer()
-            
-            // Text
             Text("Connect Together")
                 .fontWeight(.heavy)
                 .font(.title)
                 .padding()
-            
-            // Text
             Text("Here in chatty, you can talk with your favourite people.")
                 .font(.headline)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
-            
             Spacer()
-            
-            // Button: to display SignUpView
+            // to display SignUpView
             Button {
                 isSignUpScreen = true
             } label: {
@@ -55,8 +44,7 @@ struct WelcomeView: View {
                     .font(.headline)
                     .padding()
             }
-            
-            // Button: to display SignInView
+            // to display SignInView
             Button {
                 isSignInScreen = true
             } label: {
@@ -66,8 +54,6 @@ struct WelcomeView: View {
                     .padding()
             }
         }.padding()
-        // END of Vstack
-        
         
         // fullScreenCover: used to display SignUpView() and SignInView()
         // when isSignUpScreen is true, SignUpView() shows up
