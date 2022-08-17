@@ -127,11 +127,31 @@ struct SignUpView: View {
                 }else{
                     // if user account successfully created
                     print("Account created!")
+                    // save user to db
+                    saveUserInfo()
+                    
+                    // TODO: go to MainView - chat
+
                 }
             }
         } else{
             // if password and confirm password are not same
             self.isConfirmPassNotSameAlert = true
+        }
+    }
+    
+    // save user info to cloud firestore
+    private func saveUserInfo(){
+        let db = Firestore.firestore()
+        let userID = Auth.auth().currentUser!.uid
+        db.collection("users").document(userID).setData(["email": self.email, "username": self.username, "userID": userID]) { error in
+            if let e = error{
+                print(e)
+                print("faild to save user info to firestore db")
+                return
+            }
+            print("user saved to firestore db")
+            
         }
     }
 }
