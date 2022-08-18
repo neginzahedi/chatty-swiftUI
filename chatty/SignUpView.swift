@@ -5,9 +5,7 @@
 //  Created by Negin Zahedi on 2022-07-28.
 //
 // Notes:
-// SignUpView is for creating new account while checking requirements.
-
-//TODO: Display MainView() if successfully created acount
+// SignUpView is for creating new account while checking requirements and display MainView() if account successfully created.
 
 import SwiftUI
 import Firebase
@@ -28,7 +26,7 @@ struct SignUpView: View {
     @State private var isConfirmPassNotSameAlert = false
     @State private var isCreateAccountFaildAlert = false
     
-    // Boolean state that determines whether the view should be visible
+    // Boolean state that determines whether the MainView() should be visible
     @State private var isMainScreen = false
     
     var body: some View {
@@ -37,7 +35,6 @@ struct SignUpView: View {
                 .resizable()
                 .scaledToFit()
                 .frame(height: 80)
-            
             // Sign-up Field
             VStack(alignment: .leading){
                 Text("Sign-up")
@@ -138,7 +135,6 @@ struct SignUpView: View {
                     print("Account created!")
                     // save user to db
                     saveUserInfo()
-                    
                 }
             }
         } else{
@@ -153,13 +149,12 @@ struct SignUpView: View {
         let userID = Auth.auth().currentUser!.uid
         db.collection("users").document(userID).setData(["email": self.email, "username": self.username, "userID": userID]) { error in
             if let e = error{
-                print(e)
-                print("faild to save user info to firestore db")
+                print("faild to save user info to firestore db \(e)")
                 return
             }
-            print("user saved to firestore db")
+            print("user saved to firestore db and navigate to MainView()")
             
-            // TODO: go to MainView - chat
+            // go to MainView - chat
             isMainScreen = true
         }
     }
