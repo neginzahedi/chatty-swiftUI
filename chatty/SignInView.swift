@@ -12,6 +12,7 @@
 import SwiftUI
 import FirebaseAuth
 
+
 struct SignInView: View {
     
     // to dismiss current view
@@ -25,6 +26,11 @@ struct SignInView: View {
     
     // Boolean state that determines whether the alert should be visible
     @State private var isSignInFaildAlert = false
+    
+    // Boolean state that determines whether the screen should be visible
+    @State private var isForgotPasswordScreen = false
+    //    @State private var isUserSignedIn = false
+    @State private var isMainScreen = false
     
     var body: some View {
         
@@ -63,9 +69,12 @@ struct SignInView: View {
                     SecureField("Enter password ...", text: $password)
                         .textFieldStyle(.roundedBorder)
                     
-                    NavigationLink(destination: ForgotPasswordView()){
+                    Button {
+                        isForgotPasswordScreen = true
+                    } label: {
                         Text("Forget password?")
                             .foregroundColor(.gray)
+                        
                     }
                 }.padding(5)
                 
@@ -86,7 +95,6 @@ struct SignInView: View {
                 Text("Don't have an account?")
                 Button {
                     presentationMode.wrappedValue.dismiss()
-                    
                 } label: {
                     Text("Sign-up")
                         .foregroundColor(.gray)
@@ -99,7 +107,17 @@ struct SignInView: View {
             .alert(alertMessage, isPresented: $isSignInFaildAlert) {
                 Button("Ok", role: .cancel) {}
             }
-  
+        
+        // fullScreenCover:
+        // when $isForgotPasswordScreen is true, ForgotPasswordView() shows up
+            .fullScreenCover(isPresented: $isForgotPasswordScreen){
+                ForgotPasswordView()
+            }
+        // when $isMainScreen is true, MainView() shows up
+            .fullScreenCover(isPresented: $isMainScreen){
+                MainView()
+            }
+        
         
         
     }
@@ -116,6 +134,7 @@ struct SignInView: View {
             }
             //TODO: go to MainView()
             print("succesfuly log in")
+            isMainScreen = true
         }
     }
 }
