@@ -9,19 +9,45 @@
 //TODO:
 
 import SwiftUI
+import Firebase
+
+
+class MainModel: ObservableObject{
+    @Published var errorMessagr = ""
+    @Published var currentUser: CurrentUser?
+    
+    init(){
+        fetchCurrentUser()
+    }
+    
+    private func fetchCurrentUser(){
+        if Auth.auth().currentUser != nil {
+            let user = Auth.auth().currentUser
+            if let user = user{
+                self.currentUser =  CurrentUser(uid: user.uid , emailAddress: user.email! , profileImageUrl: "")
+                errorMessagr = "we have a user"
+            }
+        } else {
+            errorMessagr = "no current user"
+        }
+    }
+}
 
 struct MainView: View {
+    
+    @ObservedObject private var vm = MainModel()
+    @State private var selectedTab = "Chats"
+    
     var body: some View {
         TabView(){
             ChatTableView()
                 .tabItem {
                     Label("Chats", systemImage: "message.fill" )
-                }
-            
-            SettingView()
+                }.tag("Chats")
+            SettingView(currentUser: vm.currentUser!)
                 .tabItem {
                     Label("Settings", systemImage: "gear" )
-                }
+                }.tag("Settings")
         }
     }
 }
