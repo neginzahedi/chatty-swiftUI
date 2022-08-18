@@ -28,6 +28,9 @@ struct SignUpView: View {
     @State private var isConfirmPassNotSameAlert = false
     @State private var isCreateAccountFaildAlert = false
     
+    // Boolean state that determines whether the view should be visible
+    @State private var isMainScreen = false
+    
     var body: some View {
         VStack(alignment: .center){
             Image("signup-view-img")
@@ -113,6 +116,12 @@ struct SignUpView: View {
             .alert(alertMessage, isPresented: $isCreateAccountFaildAlert){
                 Button("Ok", role: .cancel) {}
             }
+        
+        // fullScreenCover:
+        // when isMainScreen is true, MainView() shows up
+            .fullScreenCover(isPresented: $isMainScreen) {
+                MainView()
+            }
     }
     
     // to create user account on Firebase using createUser method or display alerts if it goes wrong
@@ -130,8 +139,6 @@ struct SignUpView: View {
                     // save user to db
                     saveUserInfo()
                     
-                    // TODO: go to MainView - chat
-
                 }
             }
         } else{
@@ -152,6 +159,8 @@ struct SignUpView: View {
             }
             print("user saved to firestore db")
             
+            // TODO: go to MainView - chat
+            isMainScreen = true
         }
     }
 }
