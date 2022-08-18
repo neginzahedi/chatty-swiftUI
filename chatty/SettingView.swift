@@ -40,11 +40,9 @@ struct SettingView: View {
                 // SECTION OTHER OPTIONS
                 Section {
                     // TELL A FRIEND
-                    // share a link
+                    // TODO: share a link
                     Button {
-                        let url = URL(string: "https://neginzahedi.com")
-                        let activityController = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
-                        UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)
+                        
                     } label: {
                         HStack(spacing: 20){
                             Image(systemName: "heart.fill")
@@ -60,6 +58,16 @@ struct SettingView: View {
                         }.padding()
                     }
                     
+                }
+                
+                // TODO: Sign out user
+                Section {
+                    NavigationLink(destination: EditProfileView()){
+                        HStack(spacing: 20){
+                            Image(systemName: "rectangle.portrait.and.arrow.right")
+                            Text("Sign out")
+                        }.padding()
+                    }
                 }
             }.listStyle(InsetGroupedListStyle())
                 .environment(\.horizontalSizeClass, .regular)
