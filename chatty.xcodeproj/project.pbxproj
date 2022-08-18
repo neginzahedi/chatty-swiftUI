@@ -15,9 +15,10 @@
 		0F59536D2893558000F4B258 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F59536C2893558000F4B258 /* Preview Assets.xcassets */; };
 		0F59537428935F5200F4B258 /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F59537328935F5200F4B258 /* SignInView.swift */; };
 		0F5953762893653A00F4B258 /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953752893653A00F4B258 /* SignUpView.swift */; };
-		0F5D0FE028A1AC5000C5EE65 /* userModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D0FDF28A1AC5000C5EE65 /* userModel.swift */; };
+		0F5D0FE028A1AC5000C5EE65 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */; };
 		0F7C2577289C572C0062EC25 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */; };
 		0F7C2579289C7F660062EC25 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C2578289C7F660062EC25 /* ChatView.swift */; };
+		0FC0365328AED79500B6CAEB /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0365228AED79500B6CAEB /* ContactsView.swift */; };
 		0FF1D94C289DC3CF00D7C5EF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF1D94B289DC3CF00D7C5EF /* EditProfileView.swift */; };
 		0FF1D94E289DC44500D7C5EF /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF1D94D289DC44500D7C5EF /* SettingView.swift */; };
 		0FF33EF128AD64030073BAF5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0FF33EF028AD64030073BAF5 /* FirebaseAuth */; };
@@ -40,9 +41,10 @@
 		0F59536C2893558000F4B258 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		0F59537328935F5200F4B258 /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
 		0F5953752893653A00F4B258 /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
-		0F5D0FDF28A1AC5000C5EE65 /* userModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = userModel.swift; sourceTree = "<group>"; };
+		0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		0F7C2578289C7F660062EC25 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
+		0FC0365228AED79500B6CAEB /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		0FF1D94B289DC3CF00D7C5EF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		0FF1D94D289DC44500D7C5EF /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -91,6 +93,7 @@
 				0F59537328935F5200F4B258 /* SignInView.swift */,
 				0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */,
 				0FF68E3E28A30ED300AE3FDA /* MainView.swift */,
+				0FC0365228AED79500B6CAEB /* ContactsView.swift */,
 				0F22A2212896FC7900012C08 /* ChatTableView.swift */,
 				0F7C2578289C7F660062EC25 /* ChatView.swift */,
 				0FF1D94D289DC44500D7C5EF /* SettingView.swift */,
@@ -99,7 +102,7 @@
 				0F5953692893558000F4B258 /* Assets.xcassets */,
 				0F51ED6E2894775900E71017 /* GoogleService-Info.plist */,
 				0F59536B2893558000F4B258 /* Preview Content */,
-				0F5D0FDF28A1AC5000C5EE65 /* userModel.swift */,
+				0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */,
 				0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */,
 			);
 			path = chatty;
@@ -197,7 +200,7 @@
 				0F5953762893653A00F4B258 /* SignUpView.swift in Sources */,
 				0FF68E3F28A30ED300AE3FDA /* MainView.swift in Sources */,
 				0F22A2222896FC7900012C08 /* ChatTableView.swift in Sources */,
-				0F5D0FE028A1AC5000C5EE65 /* userModel.swift in Sources */,
+				0F5D0FE028A1AC5000C5EE65 /* CurrentUser.swift in Sources */,
 				0FF1D94C289DC3CF00D7C5EF /* EditProfileView.swift in Sources */,
 				0FF1D94E289DC44500D7C5EF /* SettingView.swift in Sources */,
 				0F59537428935F5200F4B258 /* SignInView.swift in Sources */,
@@ -207,6 +210,7 @@
 				0F7C2579289C7F660062EC25 /* ChatView.swift in Sources */,
 				0F7C2577289C572C0062EC25 /* ForgotPasswordView.swift in Sources */,
 				0F5953662893557F00F4B258 /* chattyApp.swift in Sources */,
+				0FC0365328AED79500B6CAEB /* ContactsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
