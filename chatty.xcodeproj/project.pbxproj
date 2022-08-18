@@ -99,10 +99,10 @@
 				0FF1D94D289DC44500D7C5EF /* SettingView.swift */,
 				0FF1D94B289DC3CF00D7C5EF /* EditProfileView.swift */,
 				0FF68E3C28A2BE0700AE3FDA /* ChangepasswordView.swift */,
+				0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */,
 				0F5953692893558000F4B258 /* Assets.xcassets */,
 				0F51ED6E2894775900E71017 /* GoogleService-Info.plist */,
 				0F59536B2893558000F4B258 /* Preview Content */,
-				0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */,
 				0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */,
 			);
 			path = chatty;
