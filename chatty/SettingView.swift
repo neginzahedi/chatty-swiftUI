@@ -59,17 +59,24 @@ struct SettingView: View {
                 }
                 // TODO: Sign out user
                 Section {
-                    NavigationLink(destination: EditProfileView()){
+                    Button {
+                        userSignOut()
+                    } label: {
                         HStack(spacing: 20){
                             Image(systemName: "rectangle.portrait.and.arrow.right")
                             Text("Sign out")
-                        }.padding()
+                        }.foregroundColor(.primary)
                     }
                 }
             }.listStyle(InsetGroupedListStyle())
                 .environment(\.horizontalSizeClass, .regular)
                 .navigationTitle("Settings")
         }
+    }
+    
+    
+    private func userSignOut(){
+        
     }
 }
 
