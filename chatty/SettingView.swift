@@ -6,15 +6,18 @@
 //
 // SettingView has two section. One is for user profile setting, other options are for sharing link and about me. (NOT DECIDED YET)
 //
-// NOTES: Desihn is completed.
+// NOTES: Design is completed.
 
 import SwiftUI
 
 struct SettingView: View {
+    
+    let currentUser: CurrentUser
+    
     var body: some View {
         NavigationView{
             List {
-                // SECTION USER PROFILE
+                // USER PROFILE
                 Section {
                     NavigationLink(destination: EditProfileView()){
                         HStack(spacing: 20){
@@ -27,29 +30,25 @@ struct SettingView: View {
                                     Circle().stroke(lineWidth: 3)
                                 )
                             VStack(spacing:5){
-                                Text("Username")
+                                Text(currentUser.emailAddress)
                                 Text("available")
                                     .font(.callout)
                                     .foregroundColor(.gray)
                             }
-                            
                         }.padding()
                     }
                 }
-                
-                // SECTION OTHER OPTIONS
+                // OTHER OPTIONS
                 Section {
                     // TELL A FRIEND
                     // TODO: share a link
                     Button {
-                        
                     } label: {
                         HStack(spacing: 20){
                             Image(systemName: "heart.fill")
                             Text("Tell a Friend")
                         }.foregroundColor(.primary)
                     }.padding()
-                    
                     // TODO: ABOUT ME
                     NavigationLink(destination: EmptyView()){
                         HStack(spacing: 20){
@@ -57,9 +56,7 @@ struct SettingView: View {
                             Text("About Me")
                         }.padding()
                     }
-                    
                 }
-                
                 // TODO: Sign out user
                 Section {
                     NavigationLink(destination: EditProfileView()){
@@ -72,13 +69,12 @@ struct SettingView: View {
             }.listStyle(InsetGroupedListStyle())
                 .environment(\.horizontalSizeClass, .regular)
                 .navigationTitle("Settings")
-            
         }
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView()
+        SettingView(currentUser: CurrentUser (uid: "userID", emailAddress: "emailAdress", profileImageUrl: ""))
     }
 }
