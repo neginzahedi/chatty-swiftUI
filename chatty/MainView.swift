@@ -4,7 +4,7 @@
 //
 //  Created by Negin Zahedi on 2022-08-09.
 //
-// MainView is a TabView() to easily switch between ChatTableView() and SettingView()
+// MainView is a TabView() to easily switch between ChatTableView(), SettingView() and ContactsView()
 //
 //TODO:
 
@@ -39,7 +39,11 @@ struct MainView: View {
     @State private var selectedTab = "Chats"
     
     var body: some View {
-        TabView(){
+        TabView(selection: $selectedTab){
+            ContactsView()
+                .tabItem {
+                    Label("Contacts", systemImage: "person.2.fill")
+                }.tag("Contacts")
             ChatTableView()
                 .tabItem {
                     Label("Chats", systemImage: "message.fill" )
