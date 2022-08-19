@@ -1,23 +1,23 @@
 //
-//  ContactsView.swift
+//  ContactsListView.swift
 //  chatty
 //
 //  Created by Negin Zahedi on 2022-08-18.
 //
+// ContactsListView: displays contact list, to add new contact, remove existing contact, and search
 
 import SwiftUI
 
-struct ContactsView: View {
-    @State private var name: String = ""
+struct ContactsListView: View {
+    @State private var contactName: String = ""
     
     var body: some View {
         NavigationView{
             VStack{
-                Spacer()
-                
                 HStack{
-                    TextField("search by email address or name", text: $name)
+                    TextField("search by email address or name", text:$contactName)
                         .textFieldStyle(.roundedBorder)
+                    // TODO: search contact
                     Button {
                         print("search")
                     } label: {
@@ -25,7 +25,7 @@ struct ContactsView: View {
                             .foregroundColor(.secondary)
                     }
                 }.padding()
-                
+                // TODO: Display current user contact list
                 List{
                     ForEach(0 ..< 5, id:\.self){ num in
                         HStack() {
@@ -49,13 +49,13 @@ struct ContactsView: View {
             .navigationTitle("Contacts")
             .toolbar {
                 ToolbarItem(placement: .navigationBarTrailing) {
+                    // TODO: add new contact to list
                     Button {
                         print("add new contact")
                     } label: {
                         Image(systemName: "person.fill.badge.plus")
                             .foregroundColor(.primary)
                     }
-                    
                 }
             }
         }
@@ -64,6 +64,6 @@ struct ContactsView: View {
 
 struct ContactsView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactsView()
+        ContactsListView()
     }
 }

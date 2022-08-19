@@ -18,7 +18,7 @@
 		0F5D0FE028A1AC5000C5EE65 /* CurrentUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */; };
 		0F7C2577289C572C0062EC25 /* ForgotPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */; };
 		0F7C2579289C7F660062EC25 /* ChatView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F7C2578289C7F660062EC25 /* ChatView.swift */; };
-		0FC0365328AED79500B6CAEB /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0365228AED79500B6CAEB /* ContactsView.swift */; };
+		0FC0365328AED79500B6CAEB /* ContactsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0365228AED79500B6CAEB /* ContactsListView.swift */; };
 		0FF1D94C289DC3CF00D7C5EF /* EditProfileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF1D94B289DC3CF00D7C5EF /* EditProfileView.swift */; };
 		0FF1D94E289DC44500D7C5EF /* SettingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FF1D94D289DC44500D7C5EF /* SettingView.swift */; };
 		0FF33EF128AD64030073BAF5 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 0FF33EF028AD64030073BAF5 /* FirebaseAuth */; };
@@ -44,7 +44,7 @@
 		0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentUser.swift; sourceTree = "<group>"; };
 		0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		0F7C2578289C7F660062EC25 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
-		0FC0365228AED79500B6CAEB /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
+		0FC0365228AED79500B6CAEB /* ContactsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsListView.swift; sourceTree = "<group>"; };
 		0FF1D94B289DC3CF00D7C5EF /* EditProfileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProfileView.swift; sourceTree = "<group>"; };
 		0FF1D94D289DC44500D7C5EF /* SettingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingView.swift; sourceTree = "<group>"; };
 		0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
@@ -93,7 +93,7 @@
 				0F59537328935F5200F4B258 /* SignInView.swift */,
 				0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */,
 				0FF68E3E28A30ED300AE3FDA /* MainView.swift */,
-				0FC0365228AED79500B6CAEB /* ContactsView.swift */,
+				0FC0365228AED79500B6CAEB /* ContactsListView.swift */,
 				0F22A2212896FC7900012C08 /* ChatTableView.swift */,
 				0F7C2578289C7F660062EC25 /* ChatView.swift */,
 				0FF1D94D289DC44500D7C5EF /* SettingView.swift */,
@@ -210,7 +210,7 @@
 				0F7C2579289C7F660062EC25 /* ChatView.swift in Sources */,
 				0F7C2577289C572C0062EC25 /* ForgotPasswordView.swift in Sources */,
 				0F5953662893557F00F4B258 /* chattyApp.swift in Sources */,
-				0FC0365328AED79500B6CAEB /* ContactsView.swift in Sources */,
+				0FC0365328AED79500B6CAEB /* ContactsListView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
