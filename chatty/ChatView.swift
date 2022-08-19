@@ -68,14 +68,16 @@ struct ChatBottomView: View{
         HStack{
             // TODO: picking photo
             Image(systemName: "photo.on.rectangle.angled")
+                .foregroundColor(.secondary)
             
-            TextField("Hey type here",text:$message )
-                .cornerRadius(10)
-            
+            TextField("type here...", text: $message)
+                .textFieldStyle(.roundedBorder)
+
             Button(){
                 sendMessage()
             }label: {
                 Image(systemName: "paperplane.fill")
+                    .foregroundColor(.secondary)
             }
             
         }.padding()
