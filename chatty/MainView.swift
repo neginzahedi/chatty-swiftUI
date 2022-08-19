@@ -40,7 +40,7 @@ struct MainView: View {
     
     var body: some View {
         TabView(selection: $selectedTab){
-            ContactsView()
+            ContactsListView()
                 .tabItem {
                     Label("Contacts", systemImage: "person.2.fill")
                 }.tag("Contacts")
