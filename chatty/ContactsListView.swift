@@ -28,21 +28,24 @@ struct ContactsListView: View {
                 // TODO: Display current user contact list
                 List{
                     ForEach(0 ..< 5, id:\.self){ num in
-                        HStack() {
-                            // person's image
-                            Image("mad")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .aspectRatio(contentMode: .fit)
-                                .clipShape(Circle())
-                                .padding()
-                            
-                            VStack(alignment: .leading){
-                                // contact name
-                                Text("name")
-                                    .font(.system(size: 16,weight: .bold))
-                            }
-                        }.foregroundColor(.primary)
+                        NavigationLink {
+                            ContactView()
+                        } label: {
+                            HStack() {
+                                // person's image
+                                Image("mad")
+                                    .resizable()
+                                    .frame(width: 30, height: 30)
+                                    .aspectRatio(contentMode: .fit)
+                                    .clipShape(Circle())
+                                    .padding()
+                                VStack(alignment: .leading){
+                                    // contact name
+                                    Text("name")
+                                        .font(.system(size: 16,weight: .bold))
+                                }
+                            }.foregroundColor(.primary)
+                        }
                     }
                 }
             }
