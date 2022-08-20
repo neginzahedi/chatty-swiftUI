@@ -125,7 +125,7 @@ struct SignUpView: View {
     private func createAccount(){
         // if password and confirm password are same
         if password == confirmPassword{
-            Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
+            FirebaseManager.shared.auth.createUser(withEmail: email, password: password) { authDataResult, error in
                 if let e = error{
                     // if faild to create user account
                     self.alertMessage = "\(e.localizedDescription)"
@@ -145,17 +145,21 @@ struct SignUpView: View {
     
     // save user info to cloud firestore
     private func saveUserInfo(){
-        let db = Firestore.firestore()
-        let userID = Auth.auth().currentUser!.uid
-        db.collection("users").document(userID).setData(["email": self.email, "username": self.username, "userID": userID]) { error in
-            if let e = error{
-                print("faild to save user info to firestore db \(e)")
-                return
+        if let userID = FirebaseManager.shared.auth.currentUser?.uid{
+            FirebaseManager.shared.db.collection("users").document(userID).setData([
+                "email": self.email,
+                "username": self.username,
+                "userID": userID
+            ]){ error in
+                if let e = error{
+                    print("faild to save user info to firestore db \(e)")
+                    return
+                }
+                print("user saved to firestore db and navigate to MainView()")
+                
+                // go to MainView - chat
+                isMainScreen = true
             }
-            print("user saved to firestore db and navigate to MainView()")
-            
-            // go to MainView - chat
-            isMainScreen = true
         }
     }
 }
