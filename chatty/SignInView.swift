@@ -105,7 +105,7 @@ struct SignInView: View {
     
     // to sign in user with firebase signIn(), display alert if fails and then navigate user to MainView()
     private func signIn(){
-        Auth.auth().signIn(withEmail: email, password: password) { authResult, error in
+        FirebaseManager.shared.auth.signIn(withEmail: email, password: password){ authResult, error in
             if let e = error{
                 print("failed log in")
                 self.alertMessage = e.localizedDescription
