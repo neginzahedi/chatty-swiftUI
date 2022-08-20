@@ -91,6 +91,7 @@
 		0F5953642893557F00F4B258 /* chatty */ = {
 			isa = PBXGroup;
 			children = (
+				0F7E2CB328B131DC000EAF30 /* Model */,
 				0F5953652893557F00F4B258 /* chattyApp.swift */,
 				0F5953672893557F00F4B258 /* WelcomeView.swift */,
 				0F5953752893653A00F4B258 /* SignUpView.swift */,
@@ -99,17 +100,15 @@
 				0FF68E3E28A30ED300AE3FDA /* MainView.swift */,
 				0FC0365228AED79500B6CAEB /* ContactsListView.swift */,
 				0FC19EEC28B00BBA00AE310D /* ContactView.swift */,
-				0FC19EEE28B0105600AE310D /* Contact.swift */,
 				0F22A2212896FC7900012C08 /* ChatTableView.swift */,
 				0F7C2578289C7F660062EC25 /* ChatView.swift */,
 				0FF1D94D289DC44500D7C5EF /* SettingView.swift */,
 				0FF1D94B289DC3CF00D7C5EF /* EditProfileView.swift */,
+				0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */,
 				0FF68E3C28A2BE0700AE3FDA /* ChangepasswordView.swift */,
-				0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */,
 				0F5953692893558000F4B258 /* Assets.xcassets */,
 				0F51ED6E2894775900E71017 /* GoogleService-Info.plist */,
 				0F59536B2893558000F4B258 /* Preview Content */,
-				0FF68E3A28A2B8A400AE3FDA /* ImagePicker.swift */,
 			);
 			path = chatty;
 			sourceTree = "<group>";
@@ -120,6 +119,15 @@
 				0F59536C2893558000F4B258 /* Preview Assets.xcassets */,
 			);
 			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		0F7E2CB328B131DC000EAF30 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				0FC19EEE28B0105600AE310D /* Contact.swift */,
+				0F5D0FDF28A1AC5000C5EE65 /* CurrentUser.swift */,
+			);
+			path = Model;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
