@@ -6,13 +6,14 @@
 //
 // NOTES:
 // SignInView to sign in to existing account, display allerts if it goes wrong and navigate to MainView() if user successfully signed in.
+//
+// TODO:
 
 import SwiftUI
-import FirebaseAuth
 
 struct SignInView: View {
     
-    // to dismiss current view
+    // To dismiss current view
     @Environment(\.presentationMode) var presentationMode
     
     // String State for user inputes
@@ -50,14 +51,14 @@ struct SignInView: View {
                         .autocapitalization(.none)
                         .keyboardType(.emailAddress)
                 }.padding(5)
-                // password
+                // Password
                 VStack(alignment: .leading){
                     Text("Password")
                         .font(.callout)
                         .bold()
                     SecureField("Enter password ...", text: $password)
                         .textFieldStyle(.roundedBorder)
-                    // forgot password button to display ForgotPasswordView()
+                    // Display ForgotPasswordView()
                     Button {
                         isForgotPasswordScreen = true
                     } label: {
@@ -66,14 +67,17 @@ struct SignInView: View {
                     }
                 }.padding(5)
             }.padding()
-            // sign in button
-            Button("Sign in", action: signIn)
-                .frame(width: 200, height: 50, alignment: .center)
-                .background(.blue)
-                .clipShape(Capsule())
-                .foregroundColor(.white)
-                .font(.headline)
-                .padding()
+            // Sign-in
+            Button {
+                signIn()
+            } label: {
+                Text("Sign in")
+                    .frame(width: 200, height: 50, alignment: .center)
+                    .background(.blue)
+                    .clipShape(Capsule())
+                    .foregroundColor(.white)
+                    .font(.headline)
+            }.padding()
             // dismiss SignInView() to display WelcomeView()
             HStack(alignment:.center){
                 Text("Don't have an account?")
