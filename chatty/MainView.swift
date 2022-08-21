@@ -6,7 +6,7 @@
 //
 // MainView is a TabView() to easily switch between ChatTableView(), SettingView() and ContactsView()
 //
-//TODO:
+//TODO:  profile image doesnt show
 
 import SwiftUI
 import Firebase
@@ -21,14 +21,10 @@ class MainModel: ObservableObject{
     }
     
     private func fetchCurrentUser(){
-        if Auth.auth().currentUser != nil {
-            let user = Auth.auth().currentUser
-            if let user = user{
-                self.currentUser =  CurrentUser(uid: user.uid , emailAddress: user.email! , profileImageUrl: "")
-                errorMessagr = "we have a user"
-            }
-        } else {
-            errorMessagr = "no current user"
+        if let user = FirebaseManager.shared.auth.currentUser{
+            self.currentUser = CurrentUser(uid: user.uid, emailAddress: user.email ?? "email address", profileImageUrl: "")
+        } else{
+            print("no user here MainViewModel")
         }
     }
 }

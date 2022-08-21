@@ -5,10 +5,11 @@
 //  Created by Negin Zahedi on 2022-07-28.
 //
 // Notes:
-// SignUpView is for creating new account while checking requirements and display MainView() if account successfully created.
+// SignUpView is for creating new account while checking requirements. The view displays MainView() if account successfully created.
+//
+// TODO: check fields not be empty
 
 import SwiftUI
-import Firebase
 
 struct SignUpView: View {
     
@@ -21,8 +22,8 @@ struct SignUpView: View {
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     
-    // Boolean state that determines whether the alert should be visible
     @State private var alertMessage: String = ""
+    // Boolean state that determines whether the alert should be visible
     @State private var isConfirmPassNotSameAlert = false
     @State private var isCreateAccountFaildAlert = false
     
@@ -34,7 +35,7 @@ struct SignUpView: View {
             Image("signup-view-img")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 80)
+                .frame(height: 100)
             // Sign-up Field
             VStack(alignment: .leading){
                 Text("Sign-up")
@@ -121,43 +122,42 @@ struct SignUpView: View {
             }
     }
     
-    // to create user account on Firebase using createUser method or display alerts if it goes wrong
+    // Create user account on Firebase using createUser()
     private func createAccount(){
-        // if password and confirm password are same
+        // Check passwords are same
         if password == confirmPassword{
-            FirebaseManager.shared.auth.createUser(withEmail: email, password: password) { authDataResult, error in
+            FirebaseManager.shared.auth.createUser(withEmail: email, password: password){ authDataResult, error in
                 if let e = error{
                     // if faild to create user account
                     self.alertMessage = "\(e.localizedDescription)"
                     isCreateAccountFaildAlert = true
                 }else{
-                    // if user account successfully created
+                    // Account created
                     print("Account created!")
-                    // save user to db
+                    // save user's info to Firestore DB
                     saveUserInfo()
                 }
             }
         } else{
-            // if password and confirm password are not same
+            // passwords are not same
             self.isConfirmPassNotSameAlert = true
         }
     }
     
-    // save user info to cloud firestore
+    // Save user's info to cloud firestore db
     private func saveUserInfo(){
         if let userID = FirebaseManager.shared.auth.currentUser?.uid{
             FirebaseManager.shared.db.collection("users").document(userID).setData([
-                "email": self.email,
-                "username": self.username,
-                "userID": userID
+                "userID": userID,
+                "userEmailAddress": self.email,
+                "username": self.username
             ]){ error in
                 if let e = error{
                     print("faild to save user info to firestore db \(e)")
                     return
                 }
                 print("user saved to firestore db and navigate to MainView()")
-                
-                // go to MainView - chat
+                // go to MainView
                 isMainScreen = true
             }
         }
