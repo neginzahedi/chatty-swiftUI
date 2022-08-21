@@ -84,13 +84,13 @@ struct ForgotPasswordView: View {
     //TODO: reset password link works but goes to spam right now
     // sendPasswordReset method of Firebase,send reset password link to user email address
     private func sendResetPasswordLink(){
-        Auth.auth().sendPasswordReset(withEmail: "\(email)") { error in
+        FirebaseManager.shared.auth.sendPasswordReset(withEmail: email) { error in
             if let e = error{
                 self.alertMessage = e.localizedDescription
                 self.isSendLinkFailedAlert = true
             }
             else{
-                self.alertMessage = "Reset password link is sent to the eamil address."
+                self.alertMessage = "Reset password link is sent to the \(email)"
                 self.isSendLinkSuccessfulAlert = true
             }
         }
