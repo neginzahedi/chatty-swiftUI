@@ -9,28 +9,29 @@
 // NOTES: Design is completed.
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct SettingView: View {
     
-    let currentUser: CurrentUser
+    @ObservedObject private var vm = MainModel()
     
+    let currentUser: CurrentUser
+    @State private var isSignOutClicked = false
     var body: some View {
         NavigationView{
             List {
                 // USER PROFILE
                 Section {
-                    NavigationLink(destination: EditProfileView()){
+                    NavigationLink(destination: EditProfileView(currentUser: currentUser)){
                         HStack(spacing: 20){
-                            Image("question-face")
+                            WebImage(url: URL(string: currentUser.profileImageUrl))
                                 .resizable()
-                                .scaledToFit()
+                                .scaledToFill()
                                 .frame(width: 60, height: 60,alignment: .leading)
-                                .padding()
-                                .overlay(
-                                    Circle().stroke(lineWidth: 3)
-                                )
+                                .cornerRadius(30)
+                            
                             VStack(spacing:5){
-                                Text(currentUser.emailAddress)
+                                Text(currentUser.email)
                                 Text("available")
                                     .font(.callout)
                                     .foregroundColor(.gray)
@@ -60,7 +61,7 @@ struct SettingView: View {
                 // TODO: Sign out user
                 Section {
                     Button {
-                        userSignOut()
+                        isSignOutClicked.toggle()
                     } label: {
                         HStack(spacing: 20){
                             Image(systemName: "rectangle.portrait.and.arrow.right")
@@ -72,16 +73,22 @@ struct SettingView: View {
                 .environment(\.horizontalSizeClass, .regular)
                 .navigationTitle("Settings")
         }
-    }
-    
-    
-    private func userSignOut(){
-        
+        .actionSheet(isPresented: $isSignOutClicked) {
+            .init(title: Text("Sign Out"), message: Text("Do you want to sign out?"), buttons: [
+                .destructive(Text("Sign Out"), action: {
+                    vm.signOutUser()
+                }),
+                .cancel()
+            ])
+        }
+        .fullScreenCover(isPresented: $vm.isUserLoggedOut, onDismiss: nil) {
+            WelcomeView()
+        }
     }
 }
 
 struct SettingView_Previews: PreviewProvider {
     static var previews: some View {
-        SettingView(currentUser: CurrentUser (uid: "userID", emailAddress: "emailAdress", profileImageUrl: ""))
+        SettingView(currentUser: CurrentUser(uid: "uid", username: "username", email: "email", profileImageUrl: "profileImageURL", status: "status"))
     }
 }
