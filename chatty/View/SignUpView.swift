@@ -7,7 +7,7 @@
 // Notes:
 // SignUpView is for creating new account while checking requirements. The view displays MainView() if account successfully created.
 //
-// TODO: check fields not be empty
+// TODO: check email format is correct
 
 import SwiftUI
 
@@ -43,21 +43,34 @@ struct SignUpView: View {
                     .fontWeight(.bold)
                 // username
                 VStack(alignment: .leading){
-                    Text("Username")
-                        .font(.callout)
-                        .bold()
+                    HStack{
+                        Text("Username")
+                            .font(.callout)
+                            .bold()
+                        Text("(required)")
+                            .font(.caption)
+                    }
                     TextField("Enter username...", text: $username)
-                        .disableAutocorrection(true)
+                    //.textInputAutocapitalization(.never)
                         .textFieldStyle(.roundedBorder)
+                        .textInputAutocapitalization(.never)
+                    
                 }.padding(5)
                 // email address
                 VStack(alignment: .leading){
-                    Text("Email")
-                        .font(.callout)
-                        .bold()
+                    HStack{
+                        Text("Email")
+                            .font(.callout)
+                            .bold()
+                        Text("(required)")
+                            .font(.caption)
+                    }
+                    
                     TextField("Enter email address...", text: $email)
+                    //.textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
+                    
                 }.padding(5)
                 // password
                 VStack(alignment: .leading){
@@ -91,7 +104,7 @@ struct SignUpView: View {
                     .foregroundColor(.white)
                     .font(.headline)
                     .padding()
-            }
+            }.disabled(disableSignUpButton)
             // dismiss current view and display welcomeView() again
             HStack(alignment:.center){
                 Text("I already have an account.")
@@ -122,6 +135,11 @@ struct SignUpView: View {
             }
     }
     
+    // disable sign up button when fields are empty
+    var disableSignUpButton: Bool {
+        username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty
+    }
+    
     // Create user account on Firebase using createUser()
     private func createAccount(){
         // Check passwords are same
@@ -145,22 +163,39 @@ struct SignUpView: View {
     }
     
     // Save user's info to cloud firestore db
+    // TODO: email to small
     private func saveUserInfo(){
-        if let userID = FirebaseManager.shared.auth.currentUser?.uid{
-            FirebaseManager.shared.db.collection("users").document(userID).setData([
-                "userID": userID,
-                "userEmailAddress": self.email,
-                "username": self.username
-            ]){ error in
-                if let e = error{
-                    print("faild to save user info to firestore db \(e)")
-                    return
-                }
-                print("user saved to firestore db and navigate to MainView()")
-                // go to MainView
-                isMainScreen = true
+        guard let userID = FirebaseManager.shared.auth.currentUser?.uid else {return}
+        
+        // add user to "users" collection
+        FirebaseManager.shared.firestoreDB.collection("users").document(userID).setData([
+            "uid": userID,
+            "email": self.email.lowercased(),
+            "username": self.username.lowercased(),
+            "profileImageURL" : "",
+            "status": "Available"
+        ]){ error in
+            if let e = error{
+                print("faild to save user info to firestore db \(e)")
+                return
             }
+            print("user saved to firestore db and navigate to MainView()")
+            // go to MainView
         }
+        
+        // add email and userid to "emails" collection
+        FirebaseManager.shared.firestoreDB.collection("emails").document(self.email.lowercased()).setData([
+            "email" : self.email.lowercased(),
+            "uid" : userID
+        ]){ error in
+            if let e = error{
+                print("faild to save email to firestore db emails \(e)")
+                return
+            }
+            print("user's email and id saved to firestore db.")
+            // go to MainView
+        }
+        isMainScreen = true
     }
 }
 
