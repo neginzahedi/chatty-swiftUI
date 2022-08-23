@@ -32,7 +32,7 @@ struct WelcomeView: View {
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
             Spacer()
-            // to display SignUpView
+            // Display SignUpView
             Button {
                 isSignUpScreen = true
             } label: {
@@ -44,7 +44,7 @@ struct WelcomeView: View {
                     .font(.headline)
                     .padding()
             }
-            // to display SignInView
+            // Display SignInView
             Button {
                 isSignInScreen = true
             } label: {
@@ -55,12 +55,12 @@ struct WelcomeView: View {
             }
         }.padding()
         
-        // fullScreenCover: used to display SignUpView() and SignInView()
-        // when isSignUpScreen is true, SignUpView() shows up
+        // fullScreenCover:
+        // isSignUpScreen true, SignUpView() shows up
             .fullScreenCover(isPresented: $isSignUpScreen){
                 SignUpView()
             }
-        // when isSignInScreen is true, SignInView() shows up
+        // isSignInScreen true, SignInView() shows up
             .fullScreenCover(isPresented: $isSignInScreen) {
                 SignInView()
             }
