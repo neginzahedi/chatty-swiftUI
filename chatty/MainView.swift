@@ -4,15 +4,12 @@
 //
 //  Created by Negin Zahedi on 2022-08-09.
 //
-// MainView is a TabView() to easily switch between ChatTableView(), SettingView() and ContactsView()
-
+// MainView: The view has a TabView() to easily switch between ChatTableView(), SettingView() and FriendsListView()
 
 import SwiftUI
 
 struct MainView: View {
-    
     @State private var selectedTab = "Chats"
-    
     var body: some View {
         TabView(selection: $selectedTab){
             FriendsListView()
