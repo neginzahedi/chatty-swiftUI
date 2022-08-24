@@ -5,46 +5,25 @@
 //  Created by Negin Zahedi on 2022-08-09.
 //
 // MainView is a TabView() to easily switch between ChatTableView(), SettingView() and ContactsView()
-//
-//TODO:  profile image doesnt show
+
 
 import SwiftUI
-import Firebase
-
-
-class MainModel: ObservableObject{
-    @Published var errorMessagr = ""
-    @Published var currentUser: CurrentUser?
-    
-    init(){
-        fetchCurrentUser()
-    }
-    
-    private func fetchCurrentUser(){
-        if let user = FirebaseManager.shared.auth.currentUser{
-            self.currentUser = CurrentUser(uid: user.uid, emailAddress: user.email ?? "email address", profileImageUrl: "")
-        } else{
-            print("no user here MainViewModel")
-        }
-    }
-}
 
 struct MainView: View {
     
-    @ObservedObject private var vm = MainModel()
     @State private var selectedTab = "Chats"
     
     var body: some View {
         TabView(selection: $selectedTab){
-            ContactsListView()
+            FriendsListView()
                 .tabItem {
-                    Label("Contacts", systemImage: "person.2.fill")
-                }.tag("Contacts")
+                    Label("Friends", systemImage: "person.2.fill")
+                }.tag("Friends")
             ChatTableView()
                 .tabItem {
                     Label("Chats", systemImage: "message.fill" )
                 }.tag("Chats")
-            SettingView(currentUser: vm.currentUser!)
+            SettingView()
                 .tabItem {
                     Label("Settings", systemImage: "gear" )
                 }.tag("Settings")
