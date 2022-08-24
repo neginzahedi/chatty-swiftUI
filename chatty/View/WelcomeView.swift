@@ -4,13 +4,11 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-// NOTES:
-// HomeView is used to display SignInView()/SignUpView() by using fullScreenCover
+// HomeView: The view displays SignInView/SignUpView by using fullScreenCover.
 
 import SwiftUI
 
 struct WelcomeView: View {
-    
     // Boolean states to display fullScreenCover if true
     @State private var isSignUpScreen = false
     @State private var isSignInScreen = false
