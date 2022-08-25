@@ -5,9 +5,8 @@
 //  Created by Negin Zahedi on 2022-07-28.
 //
 // Notes:
-// SignUpView is for creating new account while checking requirements. The view displays MainView() if account successfully created.
+// SignUpView: for creating new account and displays MainView() if account successfully created.
 //
-// TODO: check email format is correct
 
 import SwiftUI
 
@@ -23,6 +22,7 @@ struct SignUpView: View {
     @State private var confirmPassword: String = ""
     
     @State private var alertMessage: String = ""
+    
     // Boolean state that determines whether the alert should be visible
     @State private var isConfirmPassNotSameAlert = false
     @State private var isCreateAccountFaildAlert = false
@@ -54,7 +54,6 @@ struct SignUpView: View {
                     //.textInputAutocapitalization(.never)
                         .textFieldStyle(.roundedBorder)
                         .textInputAutocapitalization(.never)
-                    
                 }.padding(5)
                 // email address
                 VStack(alignment: .leading){
@@ -65,12 +64,10 @@ struct SignUpView: View {
                         Text("(required)")
                             .font(.caption)
                     }
-                    
                     TextField("Enter email address...", text: $email)
                     //.textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
                         .textFieldStyle(.roundedBorder)
-                    
                 }.padding(5)
                 // password
                 VStack(alignment: .leading){
@@ -163,12 +160,19 @@ struct SignUpView: View {
     }
     
     // Save user's info to cloud firestore db
-    // TODO: email to small
+    // TODO: check email format
     private func saveUserInfo(){
+        addToRegisteredUsers()
+        addToUsernames()
+        print("user saved to firestore db and navigate to MainView()")
+        // go to MainView
+        isMainScreen.toggle()
+    }
+    
+    // add user info to "registeredUsers" collection
+    func addToRegisteredUsers(){
         guard let userID = FirebaseManager.shared.auth.currentUser?.uid else {return}
-        
-        // add user to "users" collection
-        FirebaseManager.shared.firestoreDB.collection("users").document(userID).setData([
+        FirebaseManager.shared.firestoreDB.collection("registeredUsers").document(userID).setData([
             "uid": userID,
             "email": self.email.lowercased(),
             "username": self.username.lowercased(),
@@ -179,13 +183,15 @@ struct SignUpView: View {
                 print("faild to save user info to firestore db \(e)")
                 return
             }
-            print("user saved to firestore db and navigate to MainView()")
-            // go to MainView
         }
-        
+    }
+    
+    // add user's username and uid to "usernames" collection
+    func addToUsernames(){
+        guard let userID = FirebaseManager.shared.auth.currentUser?.uid else {return}
         // add email and userid to "emails" collection
-        FirebaseManager.shared.firestoreDB.collection("emails").document(self.email.lowercased()).setData([
-            "email" : self.email.lowercased(),
+        FirebaseManager.shared.firestoreDB.collection("usernames").document(self.username.lowercased()).setData([
+            "username": self.username.lowercased(),
             "uid" : userID
         ]){ error in
             if let e = error{
@@ -195,7 +201,6 @@ struct SignUpView: View {
             print("user's email and id saved to firestore db.")
             // go to MainView
         }
-        isMainScreen = true
     }
 }
 
