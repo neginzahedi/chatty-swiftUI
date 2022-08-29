@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct Contact{
+struct Contact {
     let uid: String
-    let emailAddress: String
+    let username: String
     let profileImageUrl:String
 }
