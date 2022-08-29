@@ -161,6 +161,8 @@ struct SignUpView: View {
     
     // Save user's info to cloud firestore db
     // TODO: check email format
+    // TODO: check username is unique
+    // TODO: check username no space
     private func saveUserInfo(){
         addToRegisteredUsers()
         addToUsernames()
@@ -186,7 +188,7 @@ struct SignUpView: View {
         }
     }
     
-    // add user's username and uid to "usernames" collection
+    // add username and uid to "usernames" collection
     func addToUsernames(){
         guard let userID = FirebaseManager.shared.auth.currentUser?.uid else {return}
         // add email and userid to "emails" collection
