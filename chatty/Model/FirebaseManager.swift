@@ -7,12 +7,14 @@
 
 import Foundation
 import Firebase
+import FirebaseAuth
+import FirebaseFirestore
 import FirebaseStorage
 
 class FirebaseManager: NSObject {
     let auth: Auth
     let storage: Storage
-    let db: Firestore
+    let firestoreDB: Firestore
     
     static let shared = FirebaseManager()
     
@@ -21,7 +23,7 @@ class FirebaseManager: NSObject {
         
         self.auth = Auth.auth()
         self.storage = Storage.storage()
-        self.db = Firestore.firestore()
+        self.firestoreDB = Firestore.firestore()
         
         super.init()
     }
