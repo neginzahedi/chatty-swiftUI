@@ -35,7 +35,7 @@ class MainViewModel: ObservableObject {
             let profileImageUrl = data["profileImageURL"] as? String ?? ""
             let status = data["status"] as? String ?? ""
             let uid = data["uid"] as? String ?? ""
-            self.userContacts = data["contacts"] as? [String] ?? ["contact"]
+            self.userContacts = data["contacts"] as? [String] ?? [""]
             
             self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts: self.userContacts)
         }
