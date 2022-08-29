@@ -9,6 +9,9 @@ import Foundation
 
 struct CurrentUser {
     let uid: String
-    let emailAddress: String
+    let username: String
+    let email: String
     let profileImageUrl:String
+    let status: String
+    let contacts: [String]
 }
