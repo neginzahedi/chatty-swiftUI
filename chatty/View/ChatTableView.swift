@@ -17,59 +17,49 @@ struct ChatTableView: View {
         NavigationView{
             VStack{
                 if vm.userContacts != [""] {
-                    ChatsView()
-                } else {
-                    startChatView()
-                }
+                    ScrollView{
+                        // TODO: display chats
+                        ForEach(vm.userContacts, id:\.self){ contact in
+                            VStack{
+                                NavigationLink {
+                                    ChatView(contactUsername: contact)
+                                } label: {
+                                    HStack(spacing: 16) {
+                                        // person's image
+                                        Image("kiss")
+                                            .resizable()
+                                            .frame(width: 30, height: 30)
+                                            .aspectRatio(contentMode: .fit)
+                                            .clipShape(Circle())
+                                            .padding()
+                                        
+                                        VStack(alignment: .leading){
+                                            // username
+                                            Text(contact)
+                                                .font(.system(size: 16,weight: .bold))
+                                            //last message in chat
+                                            Text("Text messages")
+                                                .font(.system(size: 14))
+                                                .foregroundColor(Color(.lightGray))
+                                        }
+                                        Spacer()
+                                        // last message date
+                                        Text("date")
+                                            .font(.system(size: 14,weight: .semibold))
+                                    }.foregroundColor(.primary)
+                                }
+                                Divider()
+                                    .padding(.vertical,8)
+                            }.padding(.horizontal)
+                        }.padding(.bottom,50)
+                    }                } else {
+                        startChatView()
+                    }
             }
             .navigationTitle("Chats")
             // TODO: Edit Button
             // TODO: New Message Button
             .navigationBarItems(leading:Text("Edit"), trailing: Image(systemName: "square.and.pencil"))
-        }
-    }
-}
-
-// when user has some chats
-struct ChatsView: View {
-    // view model has method to fetch current user
-    @ObservedObject var vm = MainViewModel()
-    var body: some View{
-        ScrollView{
-            // TODO: display chats
-            ForEach(vm.userContacts, id:\.self){ contact in
-                VStack{
-                    NavigationLink {
-                        ChatView(contactUsername: contact)
-                    } label: {
-                        HStack(spacing: 16) {
-                            // person's image
-                            Image("kiss")
-                                .resizable()
-                                .frame(width: 30, height: 30)
-                                .aspectRatio(contentMode: .fit)
-                                .clipShape(Circle())
-                                .padding()
-                            
-                            VStack(alignment: .leading){
-                                // username
-                                Text(contact)
-                                    .font(.system(size: 16,weight: .bold))
-                                //last message in chat
-                                Text("Text messages")
-                                    .font(.system(size: 14))
-                                    .foregroundColor(Color(.lightGray))
-                            }
-                            Spacer()
-                            // last message date
-                            Text("date")
-                                .font(.system(size: 14,weight: .semibold))
-                        }.foregroundColor(.primary)
-                    }
-                    Divider()
-                        .padding(.vertical,8)
-                }.padding(.horizontal)
-            }.padding(.bottom,50)
         }
     }
 }
