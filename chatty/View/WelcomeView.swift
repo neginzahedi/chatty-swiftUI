@@ -1,5 +1,5 @@
 //
-//  ContentView.swift
+//  WelcomeView.swift
 //  chatty
 //
 //  Created by Negin Zahedi on 2022-07-28.
@@ -66,7 +66,7 @@ struct WelcomeView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct WelcomeView_Previews: PreviewProvider {
     static var previews: some View {
         WelcomeView()
     }
