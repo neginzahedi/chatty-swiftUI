@@ -7,9 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0F1CD0CA28CD479C00EB0B39 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F1CD0C928CD479C00EB0B39 /* GoogleService-Info.plist */; };
 		0F22A2222896FC7900012C08 /* ChatTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F22A2212896FC7900012C08 /* ChatTableView.swift */; };
 		0F2343A428B2D2F000872586 /* SDWebImageSwiftUI in Frameworks */ = {isa = PBXBuildFile; productRef = 0F2343A328B2D2F000872586 /* SDWebImageSwiftUI */; };
-		0F51ED6F2894775A00E71017 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 0F51ED6E2894775900E71017 /* GoogleService-Info.plist */; };
 		0F5953662893557F00F4B258 /* chattyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953652893557F00F4B258 /* chattyApp.swift */; };
 		0F5953682893557F00F4B258 /* WelcomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F5953672893557F00F4B258 /* WelcomeView.swift */; };
 		0F59536A2893558000F4B258 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0F5953692893558000F4B258 /* Assets.xcassets */; };
@@ -25,6 +25,7 @@
 		0F7E2CBC28B187C1000EAF30 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7E2CBB28B187C1000EAF30 /* FirebaseFirestore */; };
 		0F7E2CBE28B187C1000EAF30 /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7E2CBD28B187C1000EAF30 /* FirebaseMessaging */; };
 		0F7E2CC028B187C1000EAF30 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 0F7E2CBF28B187C1000EAF30 /* FirebaseStorage */; };
+		0F9A4AAD28C122A100734709 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A4AAC28C122A100734709 /* ChatViewModel.swift */; };
 		0FBC8C2A28BBD37500EE45EE /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBC8C2928BBD37500EE45EE /* MainViewModel.swift */; };
 		0FC0365328AED79500B6CAEB /* ContactsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC0365228AED79500B6CAEB /* ContactsView.swift */; };
 		0FC19EED28B00BBA00AE310D /* ContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FC19EEC28B00BBA00AE310D /* ContactView.swift */; };
@@ -38,8 +39,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0F1CD0C928CD479C00EB0B39 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0F22A2212896FC7900012C08 /* ChatTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatTableView.swift; sourceTree = "<group>"; };
-		0F51ED6E2894775900E71017 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		0F5953622893557F00F4B258 /* chatty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = chatty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0F5953652893557F00F4B258 /* chattyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = chattyApp.swift; sourceTree = "<group>"; };
 		0F5953672893557F00F4B258 /* WelcomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WelcomeView.swift; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		0F7C2576289C572C0062EC25 /* ForgotPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordView.swift; sourceTree = "<group>"; };
 		0F7C2578289C7F660062EC25 /* ChatView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatView.swift; sourceTree = "<group>"; };
 		0F7E2CB428B18715000EAF30 /* FirebaseManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseManager.swift; sourceTree = "<group>"; };
+		0F9A4AAC28C122A100734709 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		0FBC8C2928BBD37500EE45EE /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		0FC0365228AED79500B6CAEB /* ContactsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsView.swift; sourceTree = "<group>"; };
 		0FC19EEC28B00BBA00AE310D /* ContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactView.swift; sourceTree = "<group>"; };
@@ -104,6 +106,7 @@
 			isa = PBXGroup;
 			children = (
 				0FBC8C2928BBD37500EE45EE /* MainViewModel.swift */,
+				0F9A4AAC28C122A100734709 /* ChatViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -128,11 +131,11 @@
 			isa = PBXGroup;
 			children = (
 				0F5953652893557F00F4B258 /* chattyApp.swift */,
+				0F2343A028B2885600872586 /* View */,
 				0F7E2CB328B131DC000EAF30 /* Model */,
 				0F2343A128B2885A00872586 /* ViewModel */,
-				0F2343A028B2885600872586 /* View */,
 				0F5953692893558000F4B258 /* Assets.xcassets */,
-				0F51ED6E2894775900E71017 /* GoogleService-Info.plist */,
+				0F1CD0C928CD479C00EB0B39 /* GoogleService-Info.plist */,
 				0F59536B2893558000F4B258 /* Preview Content */,
 			);
 			path = chatty;
@@ -229,7 +232,7 @@
 			files = (
 				0F59536D2893558000F4B258 /* Preview Assets.xcassets in Resources */,
 				0F59536A2893558000F4B258 /* Assets.xcassets in Resources */,
-				0F51ED6F2894775A00E71017 /* GoogleService-Info.plist in Resources */,
+				0F1CD0CA28CD479C00EB0B39 /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -258,6 +261,7 @@
 				0F5953662893557F00F4B258 /* chattyApp.swift in Sources */,
 				0FC19EED28B00BBA00AE310D /* ContactView.swift in Sources */,
 				0FC0365328AED79500B6CAEB /* ContactsView.swift in Sources */,
+				0F9A4AAD28C122A100734709 /* ChatViewModel.swift in Sources */,
 				0F7E2CB528B18715000EAF30 /* FirebaseManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
