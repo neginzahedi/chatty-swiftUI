@@ -9,7 +9,8 @@ import SwiftUI
 
 struct ContactView: View {
     
-    @State private var contactName: String = "Ida"
+    @State var contactUsername: String
+    
     var body: some View {
         VStack{
             Image("dead")
@@ -17,7 +18,7 @@ struct ContactView: View {
                 .scaledToFit()
                 .padding()
             VStack{
-                Text("Contact Name")
+                Text(contactUsername)
                     .font(.title2)
                     .fontWeight(.bold)
                 Text("email address")
@@ -26,7 +27,7 @@ struct ContactView: View {
             
             List(){
                 NavigationLink {
-                    ChatView()
+                    ChatView(contactUsername: contactUsername)
                 } label: {
                         Image(systemName: "message.fill")
                         Text("Send Message")
@@ -35,17 +36,17 @@ struct ContactView: View {
                     Image(systemName: "photo.fill.on.rectangle.fill")
                     Text("Media, images, video")
                 }
-                Text("Delete " + contactName)
+                Text("Delete " + contactUsername)
                     .foregroundColor(.red)
-                Text("Block " + contactName)
+                Text("Block " + contactUsername)
                     .foregroundColor(.red)
             }
         }
     }
 }
 
-struct ContactView_Previews: PreviewProvider {
+struct FriendView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactView()
+        ContactView(contactUsername: "contactUsername")
     }
 }
