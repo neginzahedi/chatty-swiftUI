@@ -4,8 +4,7 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-// Notes:
-// SignUpView: for creating new account and displays MainView() if account successfully created.
+//  SignUpView: Create new account and navigate to MainView() when account successfully created.
 //
 
 import SwiftUI
@@ -177,7 +176,7 @@ struct SignUpView: View {
         FirebaseManager.shared.firestoreDB.collection("registeredUsers").document(userID).setData([
             "uid": userID,
             "email": self.email.lowercased(),
-            "username": self.username.lowercased(),
+            "username": self.username.lowercased().replacingOccurrences(of: " ", with: ""),
             "profileImageURL" : "",
             "status": "Available"
         ]){ error in
