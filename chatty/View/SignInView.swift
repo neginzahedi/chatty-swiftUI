@@ -4,7 +4,6 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-// NOTES:
 // SignInView: to sign-in existing account, display allerts if it goes wrong and navigate to MainView() if user successfully signed in.
 //
 
