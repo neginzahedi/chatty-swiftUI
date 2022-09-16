@@ -4,7 +4,9 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-// HomeView: Displays SignInView/SignUpView
+// HomeView:
+// 1. user clicks on get started button to create account
+// 2. user clicks on sign in button to sign in to existing account
 
 import SwiftUI
 
@@ -33,7 +35,7 @@ struct WelcomeView: View {
             Spacer()
             // Display SignUpView
             Button {
-                isSignUpScreen = true
+                isSignUpScreen.toggle()
             } label: {
                 Text("Get Started")
                     .frame(width: 200, height: 50, alignment: .center)
@@ -45,7 +47,7 @@ struct WelcomeView: View {
             }
             // Display SignInView
             Button {
-                isSignInScreen = true
+                isSignInScreen.toggle()
             } label: {
                 Text("Sign In")
                     .foregroundColor(.blue)
@@ -55,11 +57,11 @@ struct WelcomeView: View {
         }.padding()
         
         // fullScreenCover:
-        // isSignUpScreen true, SignUpView() shows up
+        // if isSignUpScreen true, SignUpView() shows up
             .fullScreenCover(isPresented: $isSignUpScreen){
                 SignUpView()
             }
-        // isSignInScreen true, SignInView() shows up
+        // if isSignInScreen true, SignInView() shows up
             .fullScreenCover(isPresented: $isSignInScreen) {
                 SignInView()
             }
