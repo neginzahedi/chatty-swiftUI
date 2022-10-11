@@ -45,6 +45,7 @@ struct SignUpView: View {
                     }
                     TextField("Enter username...", text: $username)
                         .textFieldStyle(.roundedBorder)
+                        .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                         .onChange(of: username) { char in
                             username = char.replacingOccurrences(of: " ", with: "_")
@@ -88,7 +89,7 @@ struct SignUpView: View {
             
             // create account
             Button {
-                vm.createAccount(username: username, email: email, password: password, confirmPassword: confirmPassword)
+                vm.SignUp(username: username, email: email, password: password, confirmPassword: confirmPassword)
             } label: {
                 Text("Sign Up")
                     .frame(width: 200, height: 50, alignment: .center)
