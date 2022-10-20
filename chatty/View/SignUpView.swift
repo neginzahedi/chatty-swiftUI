@@ -22,6 +22,10 @@ struct SignUpView: View {
     
     @ObservedObject var vm = SignUpViewModel()
     
+    // hide/show password
+    @State private var secured: Bool = true
+    
+    
     var body: some View {
         VStack(alignment: .center){
             Image("sign-up")
@@ -44,7 +48,7 @@ struct SignUpView: View {
                             .font(.caption)
                     }
                     TextField("Enter username...", text: $username)
-                        .textFieldStyle(.roundedBorder)
+                        .foregroundColor(.secondary)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                         .onChange(of: username) { char in
@@ -63,26 +67,47 @@ struct SignUpView: View {
                     TextField("Enter email address...", text: $email)
                         .textInputAutocapitalization(.never)
                         .disableAutocorrection(true)
-                        .textFieldStyle(.roundedBorder)
                 }.padding(5)
                 // password
-                // TODO: show password
                 VStack(alignment: .leading){
                     Text("Password")
                         .font(.callout)
                         .bold()
-                    SecureField("Enter password...", text: $password)
-                        .disableAutocorrection(true)
-                        .textFieldStyle(.roundedBorder)
+                    
+                    ZStack{
+                        HStack{
+                            if self.secured{
+                                SecureField("Enter password...", text: $password)
+                                    .disableAutocorrection(true)
+                                    
+                            } else {
+                                TextField("Enter password...", text: $password)
+                                    .disableAutocorrection(true)
+                            }
+                            Button(action: {
+                                self.secured.toggle()
+                            }) {
+                                Image(systemName: self.secured ? "eye.slash": "eye")
+                                    .foregroundColor(.gray)
+                            }
+                            
+                        } // HStack
+                    } //ZStack
                 }.padding(5)
                 // confirm password
                 VStack(alignment: .leading){
                     Text("Confirm Password")
                         .font(.callout)
                         .bold()
-                    SecureField("Enter password again...", text: $confirmPassword)
-                        .disableAutocorrection(true)
-                        .textFieldStyle(.roundedBorder)
+                    HStack{
+                        if self.secured{
+                            SecureField("Enter password again...", text: $confirmPassword)
+                                .disableAutocorrection(true)
+                        } else {
+                            TextField("Enter password again...", text: $confirmPassword)
+                                .disableAutocorrection(true)
+                        }
+                    } // HStack
                 }.padding(5)
             }.padding()
             // END Sign-up
@@ -112,7 +137,7 @@ struct SignUpView: View {
         }.padding()
         
         // alert: passwords are not same
-            .alert("The password confirmation does not match.", isPresented: $vm.isConfirmPassNotSameAlert) {
+            .alert(vm.alertMessage, isPresented: $vm.isConfirmPassNotSameAlert) {
                 Button("Ok", role: .cancel) { }
             }
         // alert: faild to create account
@@ -120,7 +145,7 @@ struct SignUpView: View {
                 Button("Ok", role: .cancel) {}
             }
         // alert: username is taken
-            .alert("The username is already taken. Choose diffrent username.", isPresented: $vm.isUsernameExist){
+            .alert(vm.alertMessage, isPresented: $vm.isUsernameExistAlert){
                 Button("Ok", role: .cancel) {}
             }
         
@@ -134,5 +159,6 @@ struct SignUpView: View {
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
+            
     }
 }
