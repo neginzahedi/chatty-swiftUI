@@ -15,7 +15,7 @@ class SignUpViewModel : ObservableObject{
     // Boolean state that determines whether the alert should be visible
     @Published var isConfirmPassNotSameAlert: Bool = false
     @Published var isCreateAccountFaildAlert: Bool = false
-    @Published var isUsernameExist:Bool = false
+    @Published var isUsernameExistAlert:Bool = false
     
     // Boolean state that determines whether the MainView() should be visible
     @Published var isMainScreen: Bool = false
@@ -27,8 +27,9 @@ class SignUpViewModel : ObservableObject{
             FirebaseManager.shared.firestoreDB.collection("usernames").document(username).getDocument { documentSnapshot, error in
                 if let doc = documentSnapshot{
                     if doc.exists{
-                        print("username is duplicated: not available.")
-                        self.isUsernameExist = true
+                        self.alertMessage = "The username is already taken. Choose diffrent username."
+                        self.isUsernameExistAlert = true
+                        print("The username is already taken. Choose diffrent username.")
                     } else{
                         print("username is unique")
                         
@@ -78,8 +79,9 @@ class SignUpViewModel : ObservableObject{
                 }
             }
         } else{
+            self.alertMessage = "The password confirmation does not match."
             self.isConfirmPassNotSameAlert = true
-            print("password are not same")
+            print("The password confirmation does not match.")
         }
     }
 }
