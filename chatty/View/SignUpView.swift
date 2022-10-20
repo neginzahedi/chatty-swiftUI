@@ -35,20 +35,21 @@ struct SignUpView: View {
             // Sign-up Field
             VStack(alignment: .leading){
                 Text("Sign-up")
-                    .font(.largeTitle)
-                    .fontWeight(.bold)
+                    .font(Font.custom("Asap-Regular", size: 40))
+                    .bold()
+            
+
                 // username
                 // TODO: no special char and limited 25
                 VStack(alignment: .leading){
                     HStack{
                         Text("Username")
-                            .font(.callout)
+                            .font(Font.custom("Asap-Regular", size:20))
                             .bold()
                         Text("(required)")
-                            .font(.caption)
+                            .font(Font.custom("Asap-Regular", size:15))
                     }
                     TextField("Enter username...", text: $username)
-                        .foregroundColor(.secondary)
                         .disableAutocorrection(true)
                         .textInputAutocapitalization(.never)
                         .onChange(of: username) { char in
@@ -59,10 +60,10 @@ struct SignUpView: View {
                 VStack(alignment: .leading){
                     HStack{
                         Text("Email")
-                            .font(.callout)
+                            .font(Font.custom("Asap-Regular", size:20))
                             .bold()
                         Text("(required)")
-                            .font(.caption)
+                            .font(Font.custom("Asap-Regular", size:15))
                     }
                     TextField("Enter email address...", text: $email)
                         .textInputAutocapitalization(.never)
@@ -71,7 +72,7 @@ struct SignUpView: View {
                 // password
                 VStack(alignment: .leading){
                     Text("Password")
-                        .font(.callout)
+                        .font(Font.custom("Asap-Regular", size:20))
                         .bold()
                     
                     ZStack{
@@ -97,7 +98,7 @@ struct SignUpView: View {
                 // confirm password
                 VStack(alignment: .leading){
                     Text("Confirm Password")
-                        .font(.callout)
+                        .font(Font.custom("Asap-Regular", size:20))
                         .bold()
                     HStack{
                         if self.secured{
@@ -121,7 +122,7 @@ struct SignUpView: View {
                     .background(.blue)
                     .clipShape(Capsule())
                     .foregroundColor(.white)
-                    .font(.headline)
+                    .font(Font.custom("Asap-Bold", size:20))
                     .padding()
             }
             // dismiss current view and display welcomeView() again
