@@ -9,10 +9,12 @@ import SwiftUI
 
 @main
 struct chattyApp: App {
+    
+    @StateObject var viewRouter = ViewRouter()
 
     var body: some Scene {
         WindowGroup {
-            WelcomeView()
+            MotherView().environmentObject(viewRouter)
         }
     }
 }
