@@ -4,38 +4,40 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-// HomeView:
-// 1. user clicks on get started button to create account
-// 2. user clicks on sign in button to sign in to existing account
+
 
 import SwiftUI
 
 struct WelcomeView: View {
     
-    // Boolean states to display fullScreenCover if true
-    @State private var isSignUpScreen = false
-    @State private var isSignInScreen = false
+    // Change view to SignUpView() or SignInView()
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         VStack{
-            Image("smile")
+            // Image
+            Image("happy")
                 .resizable()
                 .scaledToFit()
                 .padding()
             Spacer()
+            // Text 1
             Text("Connect Together")
                 .fontWeight(.heavy)
                 .font(.title)
                 .padding()
+            // Text 2
             Text("Here in chatty, you can talk with your favourite people.")
                 .font(.headline)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
             Spacer()
-            // Display SignUpView
+            // Button to display SignUpView()
             Button {
-                isSignUpScreen.toggle()
+                withAnimation {
+                    viewRouter.currentView = .pageSignUpView
+                }
             } label: {
                 Text("Get Started")
                     .frame(width: 200, height: 50, alignment: .center)
@@ -45,9 +47,11 @@ struct WelcomeView: View {
                     .font(.headline)
                     .padding()
             }
-            // Display SignInView
+            // Button to display SignInView()
             Button {
-                isSignInScreen.toggle()
+                withAnimation {
+                    viewRouter.currentView = .pageSignInView
+                }
             } label: {
                 Text("Sign In")
                     .foregroundColor(.blue)
@@ -55,16 +59,6 @@ struct WelcomeView: View {
                     .padding()
             }
         }.padding()
-        
-        // fullScreenCover:
-        // if isSignUpScreen true, SignUpView() shows up
-            .fullScreenCover(isPresented: $isSignUpScreen){
-                SignUpView()
-            }
-        // if isSignInScreen true, SignInView() shows up
-            .fullScreenCover(isPresented: $isSignInScreen) {
-                SignInView()
-            }
     }
 }
 
