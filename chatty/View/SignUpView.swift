@@ -4,15 +4,12 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-//  SignUpView: Create new account and navigate to MainView() when account successfully created.
+//  SignUpView: To create an account using Firebase createUser(email,password) method.
 //
 
 import SwiftUI
 
 struct SignUpView: View {
-    
-    // Dismiss current view
-    @Environment(\.presentationMode) var presentationMode
     
     // String states for User inputes
     @State private var username: String = ""
@@ -20,146 +17,264 @@ struct SignUpView: View {
     @State private var password: String = ""
     @State private var confirmPassword: String = ""
     
-    @ObservedObject var vm = SignUpViewModel()
-    
-    // hide/show password
+    // Hide/Show password
     @State private var secured: Bool = true
     
+    // To change view
+    @EnvironmentObject var viewRouter: ViewRouter
+    
+    // Disable signup button if fields are empty
+    var disableButton: Bool {
+        username.isEmpty || email.isEmpty || password.isEmpty || confirmPassword.isEmpty
+    }
+    
+    // String Alert Message
+    @State var alertMessage: String = ""
+    
+    // Boolean state that determines whether the alert should be visible
+    @State var isConfirmPassNotSameAlert: Bool = false
+    @State var isCreateAccountFaildAlert: Bool = false
+    @State var isUsernameExistAlert:Bool = false
+    
+    // Constants
+    let const = Constant()
     
     var body: some View {
-        VStack(alignment: .center){
+        // Main Vstack
+        VStack(alignment: .center, spacing: 5){
+            //image
             Image("sign-up")
                 .resizable()
                 .scaledToFit()
                 .frame(height: 200)
-            // Sign-up Field
+            // Sign-up Vstack
             VStack(alignment: .leading){
+                // title
                 Text("Sign-up")
-                    .font(Font.custom("Asap-Regular", size: 40))
-                    .bold()
-            
-
-                // username
-                // TODO: no special char and limited 25
-                VStack(alignment: .leading){
-                    HStack{
-                        Text("Username")
-                            .font(Font.custom("Asap-Regular", size:20))
-                            .bold()
-                        Text("(required)")
-                            .font(Font.custom("Asap-Regular", size:15))
-                    }
-                    TextField("Enter username...", text: $username)
-                        .disableAutocorrection(true)
-                        .textInputAutocapitalization(.never)
-                        .onChange(of: username) { char in
-                            username = char.replacingOccurrences(of: " ", with: "_")
+                    .font(.largeTitle)
+                    .fontWeight(.bold)
+                // User input VStack
+                VStack(alignment: .leading, spacing: 5){
+                    // Username VStack
+                    // TODO: no special char and limited 25
+                    VStack(alignment: .leading){
+                        // label
+                        HStack{
+                            Text("Username")
+                                .font(.callout)
+                                .bold()
+                            Text("(required)")
+                                .font(.caption)
                         }
-                }.padding(5)
-                // email address
-                VStack(alignment: .leading){
-                    HStack{
-                        Text("Email")
-                            .font(Font.custom("Asap-Regular", size:20))
-                            .bold()
-                        Text("(required)")
-                            .font(Font.custom("Asap-Regular", size:15))
-                    }
-                    TextField("Enter email address...", text: $email)
-                        .textInputAutocapitalization(.never)
-                        .disableAutocorrection(true)
-                }.padding(5)
-                // password
-                VStack(alignment: .leading){
-                    Text("Password")
-                        .font(Font.custom("Asap-Regular", size:20))
-                        .bold()
+                        // Input
+                        TextField("Enter username...", text: $username)
+                            .disableAutocorrection(true)
+                            .textInputAutocapitalization(.never)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
+                        // replace "whitespace" with _
+                            .onChange(of: username) { char in
+                                username = char.replacingOccurrences(of: " ", with: "_")
+                            }
+                            .padding(10)
+                    }.padding(2) // Username VStack
                     
-                    ZStack{
+                    // Email VStack
+                    VStack(alignment: .leading){
+                        // Label
+                        HStack{
+                            Text("Email")
+                                .font(.callout)
+                                .bold()
+                            Text("(required)")
+                                .font(.caption)
+                        }
+                        // Input
+                        TextField("Enter email address...", text: $email)
+                            .textInputAutocapitalization(.never)
+                            .disableAutocorrection(true)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
+                            .padding(10)
+                    }.padding(2) // Email VStack
+                    
+                    // Password VStack
+                    VStack(alignment: .leading){
+                        // Label
+                        Text("Password")
+                            .font(.callout)
+                            .bold()
+                        // Input Zstack
+                        ZStack{
+                            HStack{
+                                if self.secured{
+                                    SecureField("Enter password...", text: $password)
+                                        .disableAutocorrection(true)
+                                    
+                                } else {
+                                    TextField("Enter password...", text: $password)
+                                        .disableAutocorrection(true)
+                                }
+                                Button(action: {
+                                    self.secured.toggle()
+                                }) {
+                                    Image(systemName: self.secured ? "eye.slash": "eye")
+                                        .foregroundColor(.gray)
+                                }
+                            } // HStack
+                            .padding(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
+                        } //ZStack
+                    }.padding(2)
+                    
+                    // Confirm Password VStack
+                    VStack(alignment: .leading){
+                        // Label
+                        Text("Confirm Password")
+                            .font(.callout)
+                            .bold()
+                        // Input
                         HStack{
                             if self.secured{
-                                SecureField("Enter password...", text: $password)
+                                SecureField("Enter password again...", text: $confirmPassword)
                                     .disableAutocorrection(true)
-                                    
                             } else {
-                                TextField("Enter password...", text: $password)
+                                TextField("Enter password again...", text: $confirmPassword)
                                     .disableAutocorrection(true)
                             }
-                            Button(action: {
-                                self.secured.toggle()
-                            }) {
-                                Image(systemName: self.secured ? "eye.slash": "eye")
-                                    .foregroundColor(.gray)
-                            }
-                            
                         } // HStack
-                    } //ZStack
-                }.padding(5)
-                // confirm password
-                VStack(alignment: .leading){
-                    Text("Confirm Password")
-                        .font(Font.custom("Asap-Regular", size:20))
-                        .bold()
-                    HStack{
-                        if self.secured{
-                            SecureField("Enter password again...", text: $confirmPassword)
-                                .disableAutocorrection(true)
-                        } else {
-                            TextField("Enter password again...", text: $confirmPassword)
-                                .disableAutocorrection(true)
-                        }
-                    } // HStack
-                }.padding(5)
-            }.padding()
-            // END Sign-up
-            
-            // create account
-            Button {
-                vm.SignUp(username: username, email: email, password: password, confirmPassword: confirmPassword)
-            } label: {
-                Text("Sign Up")
-                    .frame(width: 200, height: 50, alignment: .center)
-                    .background(.blue)
-                    .clipShape(Capsule())
-                    .foregroundColor(.white)
-                    .font(Font.custom("Asap-Bold", size:20))
-                    .padding()
-            }
-            // dismiss current view and display welcomeView() again
-            HStack(alignment:.center){
-                Text("I already have an account.")
+                        .padding(10)
+                        .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
+                    }.padding(2) // Confirm Password VStack
+                } // User input VStack
+            }.padding() // Sign-up Vstack
+            // Buttons Vstack
+            VStack{
+                // Button to Create Account
                 Button {
-                    presentationMode.wrappedValue.dismiss()
+                    createAccount(username: username, email: email, password: password, confirmPassword: confirmPassword)
                 } label: {
-                    Text("Sign-in")
-                        .foregroundColor(.gray)
-                }
-            }
-        }.padding()
-        
+                    Text("Sign Up")
+                        .font(.body)
+                        .bold()
+                        .frame(width: 200, height: 50, alignment: .center)
+                        .background(.blue)
+                        .clipShape(Capsule())
+                        .foregroundColor(.white)
+                        .padding()
+                }.disabled(disableButton)
+                // display signInView()
+                HStack(alignment:.center){
+                    Text("I already have an account.")
+                    Button {
+                        withAnimation {
+                            viewRouter.currentView = .pageSignInView
+                        }
+                    } label: {
+                        Text("Sign-in")
+                            .foregroundColor(.gray)
+                    }
+                } // Hstack
+            }.padding() // Buttons Vstack
+        }.padding() // Main Vstack
         // alert: passwords are not same
-            .alert(vm.alertMessage, isPresented: $vm.isConfirmPassNotSameAlert) {
+            .alert(alertMessage, isPresented: $isConfirmPassNotSameAlert) {
                 Button("Ok", role: .cancel) { }
             }
         // alert: faild to create account
-            .alert(vm.alertMessage, isPresented: $vm.isCreateAccountFaildAlert){
+            .alert(alertMessage, isPresented: $isCreateAccountFaildAlert){
                 Button("Ok", role: .cancel) {}
             }
         // alert: username is taken
-            .alert(vm.alertMessage, isPresented: $vm.isUsernameExistAlert){
+            .alert(alertMessage, isPresented: $isUsernameExistAlert){
                 Button("Ok", role: .cancel) {}
             }
-        
-        // fullScreenCover: when isMainScreen is true, MainView() shows up
-            .fullScreenCover(isPresented: $vm.isMainScreen) {
-                MainView()
+    }
+    
+    // create user on firestore Auth and add user info to firestore collections
+    func createAccount(username: String, email: String, password: String, confirmPassword: String){
+        if password == confirmPassword {
+            // username must be unique: check if username is unique or exists on Database
+            FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(username).getDocument { documentSnapshot, error in
+                if let doc = documentSnapshot{
+                    if doc.exists{
+                        print("The username is not available.")
+                        // display alert
+                        self.alertMessage = "The username is already taken. Choose diffrent username."
+                        self.isUsernameExistAlert = true
+                    } else{
+                        print("username is available.")
+                        // 1. CREATE USER
+                        FirebaseManager.shared.auth.createUser(withEmail: email, password: password){ authDataResult, error in
+                            if let e = error{
+                                print("Faild to create an account: \(e)")
+                                self.alertMessage = "\(e.localizedDescription)"
+                                self.isCreateAccountFaildAlert = true
+                            }else{
+                                print("Account created!")
+
+                                // 2. ADD USER INFO TO DATABSE
+                                guard let userID = FirebaseManager.shared.auth.currentUser?.uid else {return}
+                                let email = email.lowercased()
+                                let username = username.lowercased()
+                                addUserToDatabase(uid: userID, email: email, username: username)
+                                
+                                // 3. NAVIGATE to MainView()
+                                withAnimation {
+                                    viewRouter.currentView = .pageMainView
+                                }
+                            }
+                        }
+                    }
+                }
             }
+        } else{
+            print("The password confirmation does not match.")
+            self.alertMessage = "The password confirmation does not match."
+            self.isConfirmPassNotSameAlert = true
+        }
+    }
+    
+    // add user to firestore DB collections
+    func addUserToDatabase(uid: String, email: String, username: String){
+        addTo_users(uid: uid, email: email, username: username)
+        addTo_username_uid(uid: uid, username: username)
+    }
+    
+    // add user to "users" collection
+    // users collection stores all info of a user: uid,email,username,profileImageURL,status and contacts
+    func addTo_users(uid: String, email: String, username: String){
+        FirebaseManager.shared.firestoreDB.collection(const.collection_users).document(uid).setData([
+            "uid": uid,
+            "email": email,
+            "username": username,
+            "profileImageURL" : "",
+            "status": "Available",
+            "contacts": [Any]()
+        ]){ error in
+            if let e = error{
+                print("Faild to save user to users collection: \(e)")
+                return
+            }
+        }
+    }
+    
+    // add user to "username_uid" collection
+    // username_uid collection stores user's username and uid
+    func addTo_username_uid(uid: String, username: String){
+        FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(username).setData([
+            "username": username,
+            "uid" : uid
+        ]){ error in
+            if let e = error{
+                print("Faild to save user to username_uid collection: \(e)")
+                return
+            }
+            print("username saved to username_uid collection.")
+        }
     }
 }
 
 struct SignUpView_Previews: PreviewProvider {
     static var previews: some View {
         SignUpView()
-            
     }
 }
