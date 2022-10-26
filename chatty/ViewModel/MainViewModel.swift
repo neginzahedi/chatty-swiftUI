@@ -11,44 +11,37 @@ import Firebase
 class MainViewModel: ObservableObject {
     
     @Published var currentUser: CurrentUser?
-    @Published var userContacts = [""]
-    @Published var contacts = [Contact]()
-    @Published var isUserLoggedOut: Bool = false
+    @Published var contacts = [""]
+    
+    let const = Constant()
     
     func fetchCurrentUser(){
+        // user uid
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else {
-            print("user id not found in SettingViewModel")
+            print("uid not found in MainViewModel.")
             return
         }
-        FirebaseManager.shared.firestoreDB.collection("registeredUsers").document(uid).addSnapshotListener { documentSnapshot, error in
+        
+        // fetch user info from "users" collection
+        FirebaseManager.shared.firestoreDB.collection(const.collection_users).document(uid).addSnapshotListener { documentSnapshot, error in
             guard let document = documentSnapshot else {
-                print("Error fetching document: \(error!)")
+                print("Error fetching \(uid) document: \(error!)")
                 return
             }
             
             guard let data = document.data() else {
-                print("No data found in document.")
+                print("No data found in \(uid) document.")
                 return
             }
+            
+            // user's info
             let username = data["username"] as? String ?? ""
             let email = data["email"] as? String ?? ""
             let profileImageUrl = data["profileImageURL"] as? String ?? ""
             let status = data["status"] as? String ?? ""
             let uid = data["uid"] as? String ?? ""
-            self.userContacts = data["contacts"] as? [String] ?? [""]
-            
-            self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts: self.userContacts)
-        }
-    }
-    
-    func signOutUser(){
-        isUserLoggedOut.toggle()
-        do {
-            try FirebaseManager.shared.auth.signOut()
-            print("Signout()")
-        } catch let error {
-            // handle error here
-            print("Error when user try to sign-out: \(error.localizedDescription)")
+            self.contacts = data["contacts"] as? [String] ?? [""]
+            self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts: self.contacts)
         }
     }
 }
