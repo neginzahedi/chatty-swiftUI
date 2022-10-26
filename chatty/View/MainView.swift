@@ -4,18 +4,22 @@
 //
 //  Created by Negin Zahedi on 2022-08-09.
 //
-// MainView: The view has a TabView() to easily switch between ChatTableView(), SettingsView() and ContactsView()
+// MainView: Is a TabView with three options: Contacts, Chat and Settings
+//
 
 import SwiftUI
 
 struct MainView: View {
     
+    // default view is ChatTableView()
     @State private var selectedTab = "Chats"
+    
+    // ViewModel to fetch current user
     @ObservedObject var vm = MainViewModel()
     
     var body: some View {
         TabView(selection: $selectedTab){
-            ContactsView(vm: self.vm)
+            ContactsView()
                 .tabItem {
                     Label("Contacts", systemImage: "person.2.fill")
                 }.tag("Contacts")
