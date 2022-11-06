@@ -4,12 +4,19 @@
 //
 //  Created by Negin Zahedi on 2022-07-28.
 //
-//  SignUpView: To create an account using Firebase createUser(email,password) method.
-//
+/*
+ SignUpView: In this view, users can create an account. A username and email are both required to create an account. It checks if the username is available; otherwise, it informs the user to choose a different username. Password and confirm password must match.
+ */
 
 import SwiftUI
 
 struct SignUpView: View {
+    
+    // To change current view
+    @EnvironmentObject var viewRouter: ViewRouter
+    
+    // Firebase Constants
+    let const = Constant()
     
     // String states for User inputes
     @State private var username: String = ""
@@ -19,9 +26,6 @@ struct SignUpView: View {
     
     // Hide/Show password
     @State private var secured: Bool = true
-    
-    // To change view
-    @EnvironmentObject var viewRouter: ViewRouter
     
     // Disable signup button if fields are empty
     var disableButton: Bool {
@@ -35,9 +39,6 @@ struct SignUpView: View {
     @State var isConfirmPassNotSameAlert: Bool = false
     @State var isCreateAccountFaildAlert: Bool = false
     @State var isUsernameExistAlert:Bool = false
-    
-    // Constants
-    let const = Constant()
     
     var body: some View {
         // Main Vstack
@@ -70,12 +71,12 @@ struct SignUpView: View {
                         TextField("Enter username...", text: $username)
                             .disableAutocorrection(true)
                             .textInputAutocapitalization(.never)
-                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
                         // replace "whitespace" with _
                             .onChange(of: username) { char in
                                 username = char.replacingOccurrences(of: " ", with: "_")
                             }
                             .padding(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
                     }.padding(2) // Username VStack
                     
                     // Email VStack
@@ -92,8 +93,8 @@ struct SignUpView: View {
                         TextField("Enter email address...", text: $email)
                             .textInputAutocapitalization(.never)
                             .disableAutocorrection(true)
-                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
                             .padding(10)
+                            .overlay(RoundedRectangle(cornerRadius: 10).stroke(Color(red: 245.0/255, green: 245.0/255, blue: 245.0),lineWidth: 1))
                     }.padding(2) // Email VStack
                     
                     // Password VStack
@@ -150,7 +151,7 @@ struct SignUpView: View {
             VStack{
                 // Button to Create Account
                 Button {
-                    createAccount(username: username, email: email, password: password, confirmPassword: confirmPassword)
+                    createAccount(username: self.username, email: self.email, password: self.password, confirmPassword: self.confirmPassword)
                 } label: {
                     Text("Sign Up")
                         .font(.body)
@@ -161,7 +162,7 @@ struct SignUpView: View {
                         .foregroundColor(.white)
                         .padding()
                 }.disabled(disableButton)
-                // display signInView()
+                // Button: display signInView()
                 HStack(alignment:.center){
                     Text("I already have an account.")
                     Button {
@@ -191,28 +192,31 @@ struct SignUpView: View {
     
     // create user on firestore Auth and add user info to firestore collections
     func createAccount(username: String, email: String, password: String, confirmPassword: String){
+        // check if password and confirm password are same
         if password == confirmPassword {
             // username must be unique: check if username is unique or exists on Database
-            FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(username).getDocument { documentSnapshot, error in
+            FirebaseManager.shared.firestoreDB.collection(const.collection_usernames).document(username).getDocument { documentSnapshot, error in
                 if let doc = documentSnapshot{
                     if doc.exists{
-                        print("The username is not available.")
+                        print("Faild: username is not available.")
                         // display alert
                         self.alertMessage = "The username is already taken. Choose diffrent username."
                         self.isUsernameExistAlert = true
                     } else{
-                        print("username is available.")
+                        print("Success: username is available.")
                         // 1. CREATE USER
                         FirebaseManager.shared.auth.createUser(withEmail: email, password: password){ authDataResult, error in
                             if let e = error{
-                                print("Faild to create an account: \(e)")
+                                print("Faild: create an account: \(e)")
                                 self.alertMessage = "\(e.localizedDescription)"
                                 self.isCreateAccountFaildAlert = true
                             }else{
-                                print("Account created!")
-
-                                // 2. ADD USER INFO TO DATABSE
+                                print("Sucess: Account created,user id: \(String(describing: FirebaseManager.shared.auth.currentUser?.uid))")
+                                
+                                // 2. ADD USER TO DATABSE
+                                // current user uid
                                 guard let userID = FirebaseManager.shared.auth.currentUser?.uid else {return}
+                                // email and password must be lowercase
                                 let email = email.lowercased()
                                 let username = username.lowercased()
                                 addUserToDatabase(uid: userID, email: email, username: username)
@@ -227,7 +231,7 @@ struct SignUpView: View {
                 }
             }
         } else{
-            print("The password confirmation does not match.")
+            print("Error: The password confirmation does not match.")
             self.alertMessage = "The password confirmation does not match."
             self.isConfirmPassNotSameAlert = true
         }
@@ -236,39 +240,38 @@ struct SignUpView: View {
     // add user to firestore DB collections
     func addUserToDatabase(uid: String, email: String, username: String){
         addTo_users(uid: uid, email: email, username: username)
-        addTo_username_uid(uid: uid, username: username)
+        addTo_usernames(uid: uid, username: username)
     }
     
-    // add user to "users" collection
-    // users collection stores all info of a user: uid,email,username,profileImageURL,status and contacts
+    // "users" collection: stores current user's uid,email,username,profileImageURL,status and contacts uid
     func addTo_users(uid: String, email: String, username: String){
         FirebaseManager.shared.firestoreDB.collection(const.collection_users).document(uid).setData([
-            "uid": uid,
-            "email": email,
-            "username": username,
-            "profileImageURL" : "",
-            "status": "Available",
-            "contacts": [Any]()
+            const.collection_users_uid: uid,
+            const.collection_users_email: email,
+            const.collection_users_username: username,
+            const.collection_users_profileImageURL : "",
+            const.collection_users_status: "Available",
+            const.collection_users_contacts_uid: [Any]()
         ]){ error in
             if let e = error{
-                print("Faild to save user to users collection: \(e)")
+                print("Faild: save user to users collection: \(e)")
                 return
             }
         }
+        print("Success: user saved to users collection.")
     }
     
-    // add user to "username_uid" collection
-    // username_uid collection stores user's username and uid
-    func addTo_username_uid(uid: String, username: String){
-        FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(username).setData([
-            "username": username,
-            "uid" : uid
+    // "usernames" collection: stores username and uid
+    func addTo_usernames(uid: String, username: String){
+        FirebaseManager.shared.firestoreDB.collection(const.collection_usernames).document(username).setData([
+            const.collection_usernames_username: username,
+            const.collection_usernames_uid : uid
         ]){ error in
             if let e = error{
-                print("Faild to save user to username_uid collection: \(e)")
+                print("Faild: save user to usernames collection: \(e)")
                 return
             }
-            print("username saved to username_uid collection.")
+            print("Success: user saved to usernames collection.")
         }
     }
 }
