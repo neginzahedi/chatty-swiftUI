@@ -4,17 +4,20 @@
 //
 //  Created by Negin Zahedi on 2022-08-09.
 //
-// ChangepasswordView is to change password when user is loged in
+// ChangepasswordView: user can change the password.
 //
-// TODO: change password is not working
+
 
 import SwiftUI
-
+import FirebaseAuth
 struct ChangepasswordView: View {
     
     @State private var currentPassword: String = ""
     @State private var newPassword: String = ""
     @State private var newPasswordAgain: String = ""
+    
+    //    let user = FirebaseManager.shared.auth.currentUser
+    //    var credential: AuthCredential
     
     
     var body: some View {
@@ -36,11 +39,26 @@ struct ChangepasswordView: View {
         
     }
     
-    // change password is not working
+    // TODO: change password is not working
     private func changePassword(){
+        // check if current password is correct
+        // Prompt the user to re-provide their sign-in credentials
         
+        /*
+         user?.reauthenticate(with: credential) { error,arg  in
+         if let error = error {
+         // An error happened.
+         } else {
+         // User re-authenticated.
+         }
+         }
+         // check if new pass and new pass again is same
+         // chamge password
+         FirebaseManager.shared.auth.currentUser?.updatePassword(to: newPassword){ error in
+         */
     }
 }
+
 
 struct ChangepasswordView_Previews: PreviewProvider {
     static var previews: some View {
