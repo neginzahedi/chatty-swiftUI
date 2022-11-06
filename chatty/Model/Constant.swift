@@ -12,9 +12,17 @@ struct Constant {
     
     // Collection "users"
     let collection_users = "users"
+    let collection_users_uid = "uid"
+    let collection_users_username = "username"
+    let collection_users_email = "email"
+    let collection_users_profileImageURL = "profileImageURL"
+    let collection_users_status = "status"
+    let collection_users_contacts_uid = "contacts_uid"
     
     // Collection "username_id"
-    let collection_username_id = "username_uid"
+    let collection_usernames = "usernames"
+    let collection_username_id_uid = "uid"
+    let collection_username_id_username = "username"
     
     // Collection "messages"
     let collection_messages = "messages"
@@ -24,6 +32,6 @@ struct Constant {
     
     let collection_messages_chat_users = "chat_users"
     
-
+    
     
 }
