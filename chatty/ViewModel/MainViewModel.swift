@@ -7,13 +7,18 @@
 
 import Foundation
 import Firebase
+import SwiftUI
 
 class MainViewModel: ObservableObject {
     
     @Published var currentUser: CurrentUser?
-    @Published var contacts = [""]
+    @Published var contactsUID = [String]()
     
     let const = Constant()
+    
+    init(){
+        fetchCurrentUser()
+    }
     
     func fetchCurrentUser(){
         // user uid
@@ -40,8 +45,10 @@ class MainViewModel: ObservableObject {
             let profileImageUrl = data["profileImageURL"] as? String ?? ""
             let status = data["status"] as? String ?? ""
             let uid = data["uid"] as? String ?? ""
-            self.contacts = data["contacts"] as? [String] ?? [""]
-            self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts: self.contacts)
+            self.contactsUID = data["contacts"] as? [String] ?? [""]
+            self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts: self.contactsUID)
         }
     }
+    
+    
 }
