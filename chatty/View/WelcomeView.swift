@@ -10,30 +10,30 @@ import SwiftUI
 
 struct WelcomeView: View {
     
-    // Change view to SignUpView() or SignInView()
+    // Change current view
     @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         VStack{
             // Image
-            Image("happy")
+            Image("smile")
                 .resizable()
                 .scaledToFit()
                 .padding()
             Spacer()
-            // Text 1
+            // Text
             Text("Connect Together")
                 .fontWeight(.heavy)
                 .font(.title)
                 .padding()
-            // Text 2
+            // Text
             Text("Here in chatty, you can talk with your favourite people.")
                 .font(.headline)
                 .fontWeight(.bold)
                 .multilineTextAlignment(.center)
                 .foregroundColor(.gray)
             Spacer()
-            // Button to display SignUpView()
+            // Button: change current view to SignUpView()
             Button {
                 withAnimation {
                     viewRouter.currentView = .pageSignUpView
@@ -47,7 +47,7 @@ struct WelcomeView: View {
                     .font(.headline)
                     .padding()
             }
-            // Button to display SignInView()
+            // Button: change current view to SignInView()
             Button {
                 withAnimation {
                     viewRouter.currentView = .pageSignInView
