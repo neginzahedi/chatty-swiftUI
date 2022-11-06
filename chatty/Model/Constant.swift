@@ -19,10 +19,10 @@ struct Constant {
     let collection_users_status = "status"
     let collection_users_contacts_uid = "contacts_uid"
     
-    // Collection "username_id"
+    // Collection "usernames"
     let collection_usernames = "usernames"
-    let collection_username_id_uid = "uid"
-    let collection_username_id_username = "username"
+    let collection_usernames_uid = "uid"
+    let collection_usernames_username = "username"
     
     // Collection "messages"
     let collection_messages = "messages"
