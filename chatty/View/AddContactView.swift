@@ -4,17 +4,16 @@
 //
 //  Created by Negin Zahedi on 2022-08-24.
 //
+// AddContactView: User can find other users by searching their usernames and add them to contact list.
 
 import SwiftUI
-import Firebase
 
 struct AddContactView: View {
     
     @State private var username: String = ""
     
-    // Boolean state that determines whether the alert should be visible
-    @State private var isFindContactAlert = false
-    @State private var isFindContactFaildAlert = false
+    // view model has method to fetch contact
+    @ObservedObject var vm = AddContactViewModel()
     
     var body: some View {
         VStack{
@@ -37,7 +36,7 @@ struct AddContactView: View {
                 .disableAutocorrection(true)
             
             Button {
-                findContact()
+                vm.findContact(contactUsername: username)
             } label: {
                 Text("Find")
                     .frame(width: 200, height: 50, alignment: .center)
@@ -50,54 +49,34 @@ struct AddContactView: View {
             
             Spacer()
         }.padding()
-            .navigationTitle("Add Contact")
+            .navigationTitle("Add Friends")
             .navigationBarTitleDisplayMode(.inline)
         
         
         // alerts
-            .alert("New Contact", isPresented: $isFindContactAlert, actions: {
+        // user found
+            .alert("New ContactUser", isPresented: $vm.isContactFound, actions: {
                 Button("Add", action: addNewContact)
                 Button("Cancel", role: .cancel, action: {})
             }, message: {
                 Text("Do you want to add \(username.lowercased()) as your new contact?")
             })
-            .alert("Error", isPresented: $isFindContactFaildAlert, actions: {
+        // user not found
+            .alert("Error", isPresented: $vm.isContactNotFound, actions: {
                 Button("Cancel", role: .cancel, action: {})
             }, message: {
                 Text("The username does not exist.")
             })
-        
-    }
-    
-    func findContact(){
-        let docRef = FirebaseManager.shared.firestoreDB.collection("usernames").document(username.lowercased())
-        docRef.getDocument { (document, error) in
-            if let document = document, document.exists {
-                let dataDescription = document.data().map(String.init(describing:)) ?? "nil"
-                print("Document data: \(dataDescription)")
-                isFindContactAlert.toggle()
-            } else {
-                print("Document does not exist")
-                isFindContactFaildAlert.toggle()
+        // new contact added
+            .alert("New contact added!", isPresented: $vm.isContactAddedAlert) {
+                Button("Ok", role: .cancel) {}
             }
-        }
     }
     
     func addNewContact(){
-        guard let uid = FirebaseManager.shared.auth.currentUser?.uid else {return}
-        
-        FirebaseManager.shared.firestoreDB.collection("registeredUsers").document(uid).updateData([
-            "contacts" : FieldValue.arrayUnion([username.lowercased()])
-        ]) { error in
-            if let e = error {
-                print("error add contact: \(e)")
-                return
-            } else{
-                print("contact added.")
-            }
-        }
-        
+        vm.addNewContact(contactUsername: username)
     }
+    
 }
 
 struct AddFriendView_Previews: PreviewProvider {
