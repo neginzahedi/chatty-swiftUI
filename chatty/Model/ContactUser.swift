@@ -11,6 +11,6 @@ struct ContactUser: Hashable {
     let uid: String
     let username: String
     let email: String
-    let profileImageUrl:String
+    let profileImageURL:String
     let status: String
 }
