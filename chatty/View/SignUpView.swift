@@ -47,7 +47,7 @@ struct SignUpView: View {
             Image("sign-up")
                 .resizable()
                 .scaledToFit()
-                .frame(height: 200)
+                .padding()
             // Sign-up Vstack
             VStack(alignment: .leading){
                 // title
@@ -243,7 +243,7 @@ struct SignUpView: View {
         addTo_usernames(uid: uid, username: username)
     }
     
-    // "users" collection: stores current user's uid,email,username,profileImageURL,status and contacts uid
+    // "users" collection: stores current user's uid,email,username,profileImageURL,status and contacts_uid uid
     func addTo_users(uid: String, email: String, username: String){
         FirebaseManager.shared.firestoreDB.collection(const.collection_users).document(uid).setData([
             const.collection_users_uid: uid,
