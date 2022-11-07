@@ -11,13 +11,18 @@ import FirebaseAuth
 
 struct ForgotPasswordView: View {
     
-    // to dismiss current view
-    @Environment(\.presentationMode) var presentationMode
     
     // String State for user input
     @State private var email: String = ""
     
-    @ObservedObject var vm = ForgotPasswordViewModel()
+    @State var alertMessage: String = ""
+    
+    // Boolean state that determines whether the alert should be visible
+    @State var isSendLinkFailedAlert = false
+    @State var isSendLinkSuccessfulAlert = false
+    
+    // to change view
+    @EnvironmentObject var viewRouter: ViewRouter
     
     var body: some View {
         VStack{
@@ -45,7 +50,7 @@ struct ForgotPasswordView: View {
                 .padding()
             // Send link
             Button {
-                vm.sendResetPasswordLink(email: email)
+                self.sendResetPasswordLink(email: email)
             } label: {
                 Text("Send link")
                     .frame(width: 200, height: 50, alignment: .center)
@@ -57,18 +62,35 @@ struct ForgotPasswordView: View {
             }
             // Sign-in
             Button("Back to Sign-In") {
-                presentationMode.wrappedValue.dismiss()
+                withAnimation {
+                    viewRouter.currentView = .pageSignInView
+                }
             }.foregroundColor(.gray)
         }
         
         // Alerts:
         // alert when faild to send link
-        .alert(vm.alertMessage, isPresented: $vm.isSendLinkFailedAlert) {
+        .alert(alertMessage, isPresented: $isSendLinkFailedAlert) {
             Button("Ok", role: .cancel) {}
         }
         // alert when link sent
-        .alert(vm.alertMessage, isPresented: $vm.isSendLinkSuccessfulAlert) {
+        .alert(alertMessage, isPresented: $isSendLinkSuccessfulAlert) {
             Button("Ok", role: .cancel) {}
+        }
+    }
+    
+    //TODO: reset password link works but goes to spam right now
+    // send link to user email address
+    func sendResetPasswordLink(email: String){
+        FirebaseManager.shared.auth.sendPasswordReset(withEmail: email) { error in
+            if let e = error{
+                self.alertMessage = e.localizedDescription
+                self.isSendLinkFailedAlert = true
+            }
+            else{
+                self.alertMessage = "Reset password link is sent to the \(email)"
+                self.isSendLinkSuccessfulAlert = true
+            }
         }
     }
 }
