@@ -70,7 +70,7 @@ struct ChangeUsernameView: View {
         let username = vm.currentUser!.username
         
         // 1. check if new username is unique
-        FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(newUsername).getDocument { documentSnapshot, error in
+        FirebaseManager.shared.firestoreDB.collection(const.collection_usernames).document(newUsername).getDocument { documentSnapshot, error in
             if let doc = documentSnapshot{
                 if doc.exists{
                     print("The username is not available.")
@@ -80,7 +80,7 @@ struct ChangeUsernameView: View {
                 } else{
                     print("username is available.")
                     // 1. add new username and uid to username_id DB
-                    FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(newUsername).setData([
+                    FirebaseManager.shared.firestoreDB.collection(const.collection_usernames).document(newUsername).setData([
                         "uid": uid,
                         "username": newUsername
                     ]){ error in
@@ -90,7 +90,7 @@ struct ChangeUsernameView: View {
                         }
                     }
                     // delete old one
-                    FirebaseManager.shared.firestoreDB.collection(const.collection_username_id).document(username).delete()
+                    FirebaseManager.shared.firestoreDB.collection(const.collection_usernames).document(username).delete()
                     // 2. update username in users
                     FirebaseManager.shared.firestoreDB.collection(const.collection_users).document(uid).updateData(["username" : newUsername])
                     // 3. alert username updated
