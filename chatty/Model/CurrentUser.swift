@@ -13,5 +13,5 @@ struct CurrentUser {
     let email: String
     let profileImageUrl:String
     let status: String
-    let contacts: [String]
+    let contacts_uid: [Any]
 }
