@@ -10,15 +10,15 @@ import SwiftUI
 
 struct SignInView: View {
     
+    // To change view
+    @EnvironmentObject var viewRouter: ViewRouter
+    
     // String State for user inputes
     @State private var email: String = ""
     @State private var password: String = ""
     
     // hide/show password
     @State private var secured: Bool = true
-    
-    // To change view
-    @EnvironmentObject var viewRouter: ViewRouter
     
     // Boolean state that determines whether the alert should be visible
     @State var isSignInFaildAlert:Bool = false
