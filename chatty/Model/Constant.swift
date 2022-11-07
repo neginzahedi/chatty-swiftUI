@@ -30,8 +30,12 @@ struct Constant {
     let collection_messages_toUserID = "toUserID"
     let collection_messages_text = "text"
     
+    // collection "recent_messages"
+    let collection_messages_recent_messages = "recent_messages"
+    let collection_messages_recent_messages_fromUserID = "fromUserID"
+    let collection_messages_recent_messages_toUserID = "toUserID"
+    let collection_messages_recent_messages_text = "text"
+    
     let collection_messages_chat_users = "chat_users"
-    
-    
-    
+   
 }
