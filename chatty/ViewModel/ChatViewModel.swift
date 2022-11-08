@@ -67,50 +67,68 @@ class ChatViewModel: ObservableObject {
         // fromID: current user uid
         guard let fromUserID = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
-        // find contact user send message to is to user
-        FirebaseManager.shared.firestoreDB.collection("usernames").document(chatUser).getDocument { documentSnapshot, error in
-            if let e = error {
-                print("error fetch data in SettingViewModel: \(e)")
-                return
-            }
-            guard let data = documentSnapshot?.data()
-            else {
-                print("No data found for current user usernames collection")
-                return
-            }
-            let toUserID = data["uid"] as? String ?? ""
-            
-            // "messages" collection saves messages
-            let document = FirebaseManager.shared.firestoreDB.collection("messages")
-                .document(fromUserID)
-                .collection(toUserID)
-                .document()
-            
-            let messageData = ["fromUserID": fromUserID, "toUserID": toUserID, "text": self.chatText,"timestamp": Timestamp()] as [String : Any]
-            
-            document.setData(messageData) { error in
+        // toID: contact user uid
+        guard let toUserID = self.contact?.uid else {return}
+        // message
+        let message = [const.collection_messages_fromUserID: fromUserID, const.collection_messages_toUserID: toUserID, const.collection_messages_text: text,"timestamp": Int(NSDate().timeIntervalSince1970)] as [String : Any]
+        
+        
+        // 1. add the message to "messages" collection (fromUserID to toUserID)
+        FirebaseManager.shared.firestoreDB
+            .collection(const.collection_messages)
+            .document(fromUserID)
+            .collection(toUserID)
+            .document().setData(message) { error in
                 if let error = error {
-                    print("Failed to save message into Firestore: \(error)")
+                    print("Failed: save new message to messages collection (fromUserID-toUserID): \(error.localizedDescription).")
                     return
                 }
-                
-                print("Successfully saved current user sending message")
-                self.chatText = ""
+                print("Success: save new message to messages collection (fromUserID-toUserID).")
             }
-            
-            let recipientMessageDocument = FirebaseManager.shared.firestoreDB.collection("messages")
-                .document(toUserID)
-                .collection(fromUserID)
-                .document()
-            
-            recipientMessageDocument.setData(messageData) { error in
+        
+        // 2. add the message to "messages" collection (toUserID to FromUserID)
+        FirebaseManager.shared.firestoreDB
+            .collection(const.collection_messages)
+            .document(toUserID)
+            .collection(fromUserID)
+            .document().setData(message) { error in
                 if let error = error {
-                    print("Failed to save message into Firestore: \(error)")
+                    print("Failed: save new message to messages collection (toUserID to FromUserID): \(error.localizedDescription).")
                     return
                 }
-                
-                print("Recipient saved message as well")
+                print("Success: save new message to messages collection (toUserID to FromUserID).")
             }
+        
+        //   3. add recent message to "recentMessages" collection
+        FirebaseManager.shared.firestoreDB
+            .collection(const.collection_messages)
+            .document(fromUserID)
+            .collection(const.collection_messages_recent_messages)
+            .document(toUserID)
+            .setData(message) { (error) in
+                if let err = error {
+                    print(err.localizedDescription)
+                    return
+                }
+                print("Recent message for current user saved")
+            }
+        
+        // 4
+        FirebaseManager.shared.firestoreDB
+            .collection(const.collection_messages)
+            .document(toUserID)
+            .collection(const.collection_messages_recent_messages)
+            .document(fromUserID)
+            .setData(message) { (error) in
+                if let err = error {
+                    print(err.localizedDescription)
+                    return
+                }
+                print("Recent message for recipient saved")
+            }
+        
+        DispatchQueue.main.async {
+            self.count += 1
         }
     }
 }
