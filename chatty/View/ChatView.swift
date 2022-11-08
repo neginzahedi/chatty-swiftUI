@@ -8,76 +8,128 @@
 
 
 import SwiftUI
-import Firebase
+import SDWebImageSwiftUI
 
 struct ChatView: View {
-    let contactUsername: String
-    init(contactUsername: String){
-        self.contactUsername = contactUsername
-        self.vm = .init(chatUser: contactUsername)
+    
+    // contact uid
+    @State var user: ContactUser?
+    @State var text: String = ""
+    
+    // vm to fetch
+    @ObservedObject var vm : ChatViewModel
+    
+    // disable send button when text field is empty
+    var disabledSendButton: Bool {
+        text.isEmpty
     }
-    @ObservedObject private var vm : ChatViewModel
+    init(user: ContactUser?){
+        self.user = user
+        self.vm = ChatViewModel(contact: user)
+    }
     
     var body: some View {
         VStack{
             ScrollView{
-                // TODO: background color need to be changed to gray for reciever and blue for sender.
-                // TODO: retrieve messages from firestore
-                ForEach(vm.chatMessages){ message in
-                    HStack{
-                        Spacer()
-                        HStack{
-                            Text(message.text)
-                                .foregroundColor(.white)
+                ScrollViewReader { scrollViewProxy in
+                    VStack{
+                        ForEach(vm.chatMessages){ message in
+                            MessageView(message: message)
                         }
-                        .padding()
-                        .background(Color.blue)
-                        .cornerRadius(30)
+                        HStack{Spacer()}
+                            .id("Empty")
                     }
-                    .padding(.horizontal)
-                    .padding(.top,8)
-                }
-            }.background(Color(.init(white: 0.95, alpha: 1)))
-                .safeAreaInset(edge: .bottom) {
-                    HStack{
-                        // TODO: picking photo
-                        Image(systemName: "photo.on.rectangle.angled")
-                            .foregroundColor(.secondary)
-                        
-                        TextField("type here...", text: $vm.chatText)
-                            .textFieldStyle(.roundedBorder)
-                        
-                        Button(){
-                            sendMessage()
-                        }label: {
-                            Image(systemName: "paperplane.fill")
-                                .foregroundColor(.secondary)
+                    .onReceive(vm.$count) { _ in
+                        withAnimation(.easeOut(duration: 0.5)){
+                            scrollViewProxy.scrollTo("Empty", anchor: .bottom)
                         }
-                    }.padding()
-                        .background(Color(.systemBackground).ignoresSafeArea())
+                    }
                 }
+            }
+            .background(Color(.init(white: 0.95, alpha: 1)))
+            .safeAreaInset(edge: .bottom) {
+                HStack{
+                    // TODO: picking photo
+                    Image(systemName: "photo.on.rectangle.angled")
+                        .foregroundColor(.secondary)
+                    
+                    TextField("type here...", text: $text)
+                        .textFieldStyle(.roundedBorder)
+                    // Button: save new message to firestore
+                    Button(){
+                        vm.sendMessage(contactUID: user?.uid ?? "", text: self.text)
+                        self.text = ""
+                        print("button")
+                    }label: {
+                        Image(systemName: "paperplane.fill")
+                            .foregroundColor(.secondary)
+                    }.disabled(disabledSendButton)
+                }.padding()
+                    .background(Color(.systemBackground).ignoresSafeArea())
+            }
         }
         .toolbar {
             ToolbarItem(placement: .principal) {
                 HStack {
-                    Image(systemName: "person.crop.circle.fill")
-                        .resizable()
-                        .frame(width: 40, height: 40)
-                        .foregroundColor(.secondary)
-                    Text(contactUsername)
+                    if user?.profileImageURL == ""{
+                        Image("profile")
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
+                            .cornerRadius(20)
+                    } else {
+                        WebImage(url: URL(string: user?.profileImageURL ?? "profile"))
+                            .resizable()
+                            .scaledToFill()
+                            .frame(width: 40, height: 40)
+                            .cornerRadius(20)
+                    }
+                    Text(user?.username ?? "no")
                 }
             }
         }
     }
-    // TODO: send message
-    private func sendMessage(){
-        vm.handleSend()
+}
+
+// currentUser/contactUser message
+struct MessageView: View {
+    let message: ChatMessage
+    var body: some View{
+        VStack{
+            // Right-Side: Current signed-in user message
+            if message.fromID == FirebaseManager.shared.auth.currentUser?.uid{
+                HStack{
+                    Spacer()
+                    HStack{
+                        Text(message.text)
+                            .foregroundColor(.white)
+                    }
+                    .padding()
+                    .background(Color.blue)
+                    .cornerRadius(30)
+                }
+            }
+            // Left-Side: Contact user message
+            else {
+                HStack{
+                    HStack{
+                        Text(message.text)
+                            .foregroundColor(.black)
+                    }
+                    .padding()
+                    .background(Color.white)
+                    .cornerRadius(30)
+                    Spacer()
+                }
+            }
+        }
+        .padding(.horizontal)
+        .padding(.top,8)
     }
 }
 
-
 struct ChatView_Previews: PreviewProvider {
     static var previews: some View {
-        ChatView(contactUsername: "")
+        ChatView(user: ContactUser(uid: "", username: "", email: "", profileImageURL: "", status: ""))
     }
 }
