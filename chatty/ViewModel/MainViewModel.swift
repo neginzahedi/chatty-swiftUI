@@ -6,47 +6,49 @@
 //
 
 import Foundation
-import Firebase
-import SwiftUI
 
 class MainViewModel: ObservableObject {
-    
-    @Published var currentUser: CurrentUser?
-    @Published var contactsUID = [String]()
-    
+ 
+    // Firebase constants
     let const = Constant()
+    
+    // current user info
+    @Published var currentUser: CurrentUser?
+    
+    // user's contacts uid
+    @Published var contactsUID = [String]()
     
     init(){
         fetchCurrentUser()
     }
     
     func fetchCurrentUser(){
-        // user uid
+        // current user uid
         guard let uid = FirebaseManager.shared.auth.currentUser?.uid else {
-            print("uid not found in MainViewModel.")
+            print("Faild: current user uid not found in MainViewModel.")
             return
         }
         
         // fetch user info from "users" collection
         FirebaseManager.shared.firestoreDB.collection(const.collection_users).document(uid).addSnapshotListener { documentSnapshot, error in
             guard let document = documentSnapshot else {
-                print("Error fetching \(uid) document: \(error!)")
+                print("Error: fetching document: \(error!)")
                 return
             }
             
             guard let data = document.data() else {
-                print("No data found in \(uid) document.")
+                print("Error: No data found in document.")
                 return
             }
             
-            // user's info
-            let username = data["username"] as? String ?? ""
-            let email = data["email"] as? String ?? ""
-            let profileImageUrl = data["profileImageURL"] as? String ?? ""
-            let status = data["status"] as? String ?? ""
-            let uid = data["uid"] as? String ?? ""
-            self.contactsUID = data["contacts"] as? [String] ?? [""]
-            self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts: self.contactsUID)
+            // current user's info
+            let username = data[self.const.collection_users_username] as? String ?? ""
+            let email = data[self.const.collection_users_email] as? String ?? ""
+            let profileImageUrl = data[self.const.collection_users_profileImageURL] as? String ?? ""
+            let status = data[self.const.collection_users_status] as? String ?? ""
+            let uid = data[self.const.collection_users_uid] as? String ?? ""
+            self.contactsUID = data[self.const.collection_users_contacts_uid] as? [String] ?? [""]
+            self.currentUser = CurrentUser(uid: uid, username: username,email: email, profileImageUrl: profileImageUrl, status: status, contacts_uid: self.contactsUID)
         }
     }
     
