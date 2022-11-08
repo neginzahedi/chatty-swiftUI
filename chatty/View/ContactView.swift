@@ -6,47 +6,66 @@
 // TODO: ContactView()
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ContactView: View {
     
-    @State var contactUsername: String
+    @State var contactUID: String?
+    @ObservedObject var vm = ContactViewModel()
     
     var body: some View {
         VStack{
-            Image("dead")
-                .resizable()
-                .scaledToFit()
-                .padding()
+            // image
+            if vm.contact?.profileImageURL == "" {
+                Image("profile")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 200, height: 200,alignment: .leading)
+                    .cornerRadius(50)
+            } else {
+                WebImage(url: URL(string: vm.contact?.profileImageURL ?? ""))
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 200, height: 200,alignment: .leading)
+                    .cornerRadius(100)
+            }
             VStack{
-                Text(contactUsername)
+                // username
+                Text(vm.contact?.username ?? "username")
                     .font(.title2)
                     .fontWeight(.bold)
-                Text("email address")
+                // status
+                Text(vm.contact?.status ?? "status")
             }
             .padding()
             
             List(){
+                // send message
                 NavigationLink {
-                    ChatView(contactUsername: contactUsername)
+                    ChatView(user: vm.contact)
                 } label: {
-                        Image(systemName: "message.fill")
-                        Text("Send Message")
+                    Image(systemName: "message.fill")
+                    Text("Send Message")
                 }
                 HStack{
                     Image(systemName: "photo.fill.on.rectangle.fill")
                     Text("Media, images, video")
                 }
-                Text("Delete " + contactUsername)
+                // TODO: delete contact
+                Text("Delete " + (vm.contact?.username ?? "username"))
                     .foregroundColor(.red)
-                Text("Block " + contactUsername)
+                // TODO: block contact
+                Text("Block " + (vm.contact?.username ?? "username"))
                     .foregroundColor(.red)
             }
         }
+        .onAppear {
+            vm.getContact(uid: contactUID ?? "uid")
+        }
     }
 }
-
 struct FriendView_Previews: PreviewProvider {
     static var previews: some View {
-        ContactView(contactUsername: "contactUsername")
+        ContactView()
     }
 }
