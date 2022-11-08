@@ -25,7 +25,7 @@ struct SettingsView: View {
             List {
                 // Section User Profile
                 Section {
-                    NavigationLink(destination: EditProfileView()){
+                    NavigationLink(destination: EditProfileView(vm: self.vm)){
                         HStack(spacing: 20){
                             if vm.currentUser?.profileImageUrl == "" {
                                 Image("profile")
@@ -44,7 +44,7 @@ struct SettingsView: View {
                                 // Username
                                 Text(vm.currentUser?.username ?? "username")
                                 // Status
-                                Text("available")
+                                Text(vm.currentUser?.status ?? "Available")
                                     .font(.callout)
                                     .foregroundColor(.gray)
                             } // VStack
@@ -56,7 +56,7 @@ struct SettingsView: View {
                 Section {
                     // TELL A FRIEND
                     Button {
-                        shareLink()
+                        //shareLink()
                     } label: {
                         HStack(spacing: 20){
                             Image(systemName: "heart.fill")
@@ -88,7 +88,7 @@ struct SettingsView: View {
                 }
             }.listStyle(InsetGroupedListStyle())
                 .environment(\.horizontalSizeClass, .regular)
-                .navigationTitle("Settings")
+                .navigationBarTitle(Text("Settings"), displayMode: .inline)
         }
         
         // actionSheet: confirm sign out
@@ -103,11 +103,11 @@ struct SettingsView: View {
     }
     
     // TODO: ios 16 has ShareLink functionality but the app is ios 15
-    func shareLink(){
+    /*func shareLink(){
         let url = URL(string: "https://github.com/neginzahedi/chatty-swiftUI")
         let activityController = UIActivityViewController(activityItems: [url!], applicationActivities: nil)
         UIApplication.shared.windows.first?.rootViewController!.present(activityController, animated: true, completion: nil)
-    }
+    }*/
     
     // Sign-out current user and navigate to WelcomeView()
     func signOutUser(){
