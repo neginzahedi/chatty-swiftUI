@@ -23,7 +23,7 @@ struct MainView: View {
                 .tabItem {
                     Label("Contacts", systemImage: "person.2.fill")
                 }.tag("Contacts")
-            ChatTableView(vm: self.vm)
+            ChatTableView()
                 .tabItem {
                     Label("Chats", systemImage: "message.fill" )
                 }.tag("Chats")
@@ -31,8 +31,6 @@ struct MainView: View {
                 .tabItem {
                     Label("Settings", systemImage: "gear" )
                 }.tag("Settings")
-        }.onAppear(){
-            self.vm.fetchCurrentUser()
         }
     }
 }
