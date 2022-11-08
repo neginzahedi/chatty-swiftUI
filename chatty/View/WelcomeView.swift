@@ -16,7 +16,7 @@ struct WelcomeView: View {
     var body: some View {
         VStack{
             // Image
-            Image("smile")
+            Image("welcome")
                 .resizable()
                 .scaledToFit()
                 .padding()
