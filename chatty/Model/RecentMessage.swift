@@ -15,7 +15,7 @@ struct RecentMessage: Identifiable {
     let docId: String
     let fromId: String
     let toId: String
-    let timestamp: Timestamp
+    let timestamp: Int
     let text: String
     
     init(docId: String, dictionary: [String: Any]) {
@@ -24,6 +24,6 @@ struct RecentMessage: Identifiable {
         self.toId = dictionary["toUserID"] as? String ?? ""
         self.text = dictionary["text"] as? String ?? ""
         self.timestamp = dictionary["timestamp"]
-        as? Firebase.Timestamp ?? Firebase.Timestamp()
+        as? Int ?? 1
     }
 }
