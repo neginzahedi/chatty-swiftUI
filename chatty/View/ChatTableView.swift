@@ -72,7 +72,7 @@ struct ChatTableView: View {
 struct EmptyChatTable: View{
     var body: some View{
         VStack (alignment: .center, spacing: 20){
-            Image("signup-view-img")
+            Image("chat-table")
                 .resizable()
                 .scaledToFit()
                 .padding()
