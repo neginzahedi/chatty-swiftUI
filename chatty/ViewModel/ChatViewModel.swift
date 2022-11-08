@@ -8,61 +8,43 @@
 import Foundation
 import Firebase
 
-struct ChatMessage: Identifiable {
-    var id: String {documentID}
-    let fromID: String
-    let toID: String
-    let text : String
-    let documentID: String
-    
-    init(documentID:String, data: [String: Any]){
-        self.documentID = documentID
-        self.fromID = data["fromID"] as? String ?? ""
-        self.toID = data["toID"] as? String ?? ""
-        self.text = data["text"] as? String ?? ""
-    }
-}
-
 class ChatViewModel: ObservableObject {
     
-    // contact user
-    let chatUser: String
+    // Firebase constants
+    var const = Constant()
     
-    // body of message
-    @Published var chatText = ""
+    @Published var count = 0
+    
     // array of type ChatMessage
     @Published var chatMessages = [ChatMessage]()
     
-    init(chatUser: String){
-        self.chatUser = chatUser
+    // array of type ChatMessage
+    let contact : ContactUser?
+    
+    init(contact: ContactUser?){
+        self.contact = contact
         fetchMessages()
     }
     
+    // fetch messages from database "messages"
     func fetchMessages(){
-        // from user is current user
-        guard let fromID = FirebaseManager.shared.auth.currentUser?.uid else {return}
         
-        // find chat user ID
-        FirebaseManager.shared.firestoreDB.collection("usernames").document(chatUser).addSnapshotListener { documentSnapshot, error in
-            if let e = error {
-                print(e)
-                return
-            }
-            
-            guard let data = documentSnapshot?.data()
-            else {
-                print("No data found for current user usernames collection")
-                return
-            }
-            let toID =  data["uid"] as? String ?? ""
-            // get data from db
-            FirebaseManager.shared.firestoreDB.collection("messages")
-                .document(fromID)
-                .collection(toID)
-                .order(by: "timestamp")
-                .addSnapshotListener { querySnapshot, error in
+        // fromID: current signed-in user uid
+        guard let fromUserID = FirebaseManager.shared.auth.currentUser?.uid else {return}
+        
+        // toID: contact uid
+        guard let toUserID =  self.contact?.uid else {return}
+        
+        // get data from db
+        FirebaseManager.shared.firestoreDB
+            .collection(const.collection_messages)
+            .document(fromUserID)
+            .collection(toUserID)
+            .order(by: "timestamp")
+            .addSnapshotListener { querySnapshot, error in
                 if let e = error {
-                    print("Faild to get messages \(e)")
+                    print("Faild: Fetching messages.")
+                    print(e.localizedDescription)
                     return
                 }
                 
@@ -75,11 +57,14 @@ class ChatViewModel: ObservableObject {
                     }
                 })
             }
-        }
+        // scroll page to bottom
+        
     }
     
-    func handleSend() {
-        // current signed in user is from user
+    // save new message to database "messages"
+    func sendMessage(contactUID: String, text: String) {
+        
+        // fromID: current user uid
         guard let fromUserID = FirebaseManager.shared.auth.currentUser?.uid else { return }
         
         // find contact user send message to is to user
@@ -129,3 +114,4 @@ class ChatViewModel: ObservableObject {
         }
     }
 }
+
