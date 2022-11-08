@@ -151,7 +151,7 @@ struct SignUpView: View {
             VStack{
                 // Button to Create Account
                 Button {
-                    createAccount(username: self.username, email: self.email, password: self.password, confirmPassword: self.confirmPassword)
+                    createAccount()
                 } label: {
                     Text("Sign Up")
                         .font(.body)
@@ -191,7 +191,7 @@ struct SignUpView: View {
     }
     
     // create user on firestore Auth and add user info to firestore collections
-    func createAccount(username: String, email: String, password: String, confirmPassword: String){
+    func createAccount(){
         // check if password and confirm password are same
         if password == confirmPassword {
             // username must be unique: check if username is unique or exists on Database
