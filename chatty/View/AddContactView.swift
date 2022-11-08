@@ -17,9 +17,8 @@ struct AddContactView: View {
     
     var body: some View {
         VStack{
-            Image("kiss")
+            Image("sign-in")
                 .resizable()
-                .frame(width: 150, height: 150)
                 .scaledToFit()
                 .padding()
             Text("Add your chatty friend")
