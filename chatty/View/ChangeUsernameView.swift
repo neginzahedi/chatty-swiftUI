@@ -22,10 +22,6 @@ struct ChangeUsernameView: View {
     
     var body: some View {
         VStack{
-            Image("dead")
-                .resizable()
-                .scaledToFit()
-                .padding()
             Spacer()
             Text("Your username is unique on chatty and your friends can find you by this username.")
                 .foregroundColor(.gray)
