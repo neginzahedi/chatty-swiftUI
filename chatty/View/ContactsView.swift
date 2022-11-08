@@ -7,16 +7,21 @@
 // ContactsView: displays contacts, add new contact,
 
 import SwiftUI
+import SDWebImageSwiftUI
 
 struct ContactsView: View {
-    @State private var contactEmail: String = ""
-    @ObservedObject var vm = MainViewModel()
+    @State private var contactUsername: String = ""
+    @ObservedObject var vm = ContactsViewModel()
+    
+    init(){
+        vm.fetchUserContacts()
+    }
     
     var body: some View {
         NavigationView{
             VStack{
                 HStack{
-                    TextField("search username", text:$contactEmail)
+                    TextField("search username", text:$contactUsername)
                         .textFieldStyle(.roundedBorder)
                     Button {
                         // TODO: search contact
@@ -26,35 +31,44 @@ struct ContactsView: View {
                             .foregroundColor(.secondary)
                     }
                 }.padding()
-                if vm.userContacts != [""]{
+                if vm.contacts.isEmpty{
+                    Empty()
+                } else {
+                    // TODO: alphabet order
                     List{
-                        ForEach(vm.userContacts, id: \.self){ contact in
+                        ForEach(vm.contacts, id: \.self){ contact in
                             NavigationLink {
-                                ContactView(contactUsername: contact)
+                                ContactView(contactUID: contact.uid)
                             } label: {
                                 HStack() {
-                                    // person's image
-                                    Image("mad")
-                                        .resizable()
-                                        .frame(width: 30, height: 30)
-                                        .aspectRatio(contentMode: .fit)
-                                        .clipShape(Circle())
-                                        .padding()
+                                    // contact image
+                                    if contact.profileImageURL == "" {
+                                        Image("profile")
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 60, height: 60,alignment: .leading)
+                                            .cornerRadius(30)
+                                            .padding()
+                                    } else {
+                                        WebImage(url: URL(string: contact.profileImageURL ))
+                                            .resizable()
+                                            .scaledToFill()
+                                            .frame(width: 60, height: 60,alignment: .leading)
+                                            .cornerRadius(30)
+                                            .padding()
+                                    }
+                                    // contact username
                                     VStack(alignment: .leading){
-                                        // contact name
-                                        Text(contact)
+                                        Text(contact.username)
                                             .font(.system(size: 16,weight: .bold))
                                     }
                                 }.foregroundColor(.primary)
                             }
                         }
                     }
-                    
-                } else {
-                    Empty()
                 }
             }
-            .navigationTitle("Contacts")
+            .navigationTitle("Contacts").navigationBarTitleDisplayMode(.inline)
             .toolbar {
                 // Trailing
                 ToolbarItem(placement: .navigationBarTrailing) {
