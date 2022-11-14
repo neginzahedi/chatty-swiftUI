@@ -50,10 +50,16 @@ class ChatViewModel: ObservableObject {
                 
                 querySnapshot?.documentChanges.forEach({ change in
                     if change.type == .added {
-                        let data = change.document.data()
-                        let docID = change.document.documentID
-                        let chatMessage = ChatMessage(documentID: docID, data: data)
-                        self.chatMessages.append(chatMessage)
+                        //let data = change.document.data()
+                        //let docID = change.document.documentID
+                        
+                        do {
+                            if let message = try change.document.data(as: ChatMessage?.self) {
+                                self.chatMessages.append(message)
+                            }
+                        } catch {
+                            print("this is error: \(error)")
+                        }
                     }
                 })
             }
@@ -70,7 +76,7 @@ class ChatViewModel: ObservableObject {
         // toID: contact user uid
         guard let toUserID = self.contact?.uid else {return}
         // message
-        let message = [const.collection_messages_fromUserID: fromUserID, const.collection_messages_toUserID: toUserID, const.collection_messages_text: text,"timestamp": Int(NSDate().timeIntervalSince1970)] as [String : Any]
+        let message = [const.collection_messages_fromUserID: fromUserID, const.collection_messages_toUserID: toUserID, const.collection_messages_text: text,"timestamp": Timestamp()] as [String : Any]
         
         
         // 1. add the message to "messages" collection (fromUserID to toUserID)
