@@ -7,23 +7,20 @@
 
 import Foundation
 import Firebase
+import FirebaseFirestoreSwift
 
 // dictionary
-struct RecentMessage: Identifiable {
-    var id: String { docId }
+struct RecentMessage: Codable, Identifiable {
     
-    let docId: String
-    let fromId: String
-    let toId: String
-    let timestamp: Int
+    @DocumentID var id: String?
+    let fromUserID: String
     let text: String
+    let timestamp: Date
+    let toUserID: String
     
-    init(docId: String, dictionary: [String: Any]) {
-        self.docId = docId
-        self.fromId = dictionary["fromUserID"] as? String ?? ""
-        self.toId = dictionary["toUserID"] as? String ?? ""
-        self.text = dictionary["text"] as? String ?? ""
-        self.timestamp = dictionary["timestamp"]
-        as? Int ?? 1
+    var timePassed: String{
+        let formatter = RelativeDateTimeFormatter()
+        formatter.unitsStyle = .abbreviated
+        return formatter.localizedString(for: timestamp, relativeTo: Date())
     }
 }
