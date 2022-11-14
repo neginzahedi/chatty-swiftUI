@@ -33,10 +33,10 @@ struct ChatTableView: View {
                 }else {
                     ScrollView{
                         ForEach(vm.recentMessages){ recentMessage in
-                            if recentMessage.fromId == currentUID {
-                                ChatRow(contactUID: recentMessage.toId,message: recentMessage)
+                            if recentMessage.fromUserID == currentUID {
+                                ChatRow(contactUID: recentMessage.toUserID,message: recentMessage)
                             } else {
-                                ChatRow(contactUID: recentMessage.fromId,message: recentMessage)
+                                ChatRow(contactUID: recentMessage.fromUserID,message: recentMessage)
                             }
                         }.padding(.bottom,50)
                     }
@@ -130,7 +130,7 @@ struct ChatRow: View {
                     }
                     Spacer()
                     // last message date
-                    Text(message.timestamp.timeDifference)
+                    Text(message.timePassed)
                         .font(.system(size: 14,weight: .semibold))
                 }.foregroundColor(.primary)
             }
