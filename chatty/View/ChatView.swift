@@ -50,8 +50,11 @@ struct ChatView: View {
             .safeAreaInset(edge: .bottom) {
                 HStack{
                     // TODO: picking photo
-                    Image(systemName: "photo.on.rectangle.angled")
-                        .foregroundColor(.secondary)
+                    Button {
+                    } label: {
+                        Image(systemName: "photo.on.rectangle.angled")
+                            .foregroundColor(.secondary)
+                    }
                     
                     TextField("type here...", text: $text)
                         .textFieldStyle(.roundedBorder)
@@ -97,7 +100,7 @@ struct MessageView: View {
     var body: some View{
         VStack{
             // Right-Side: Current signed-in user message
-            if message.fromID == FirebaseManager.shared.auth.currentUser?.uid{
+            if message.fromUserID == FirebaseManager.shared.auth.currentUser?.uid{
                 HStack{
                     Spacer()
                     HStack{
