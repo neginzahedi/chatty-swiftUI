@@ -6,6 +6,8 @@
 //
 
 import Foundation
+import Firebase
+import FirebaseFirestoreSwift
 
 class ChatTableViewModel: ObservableObject {
     
@@ -50,14 +52,22 @@ class ChatTableViewModel: ObservableObject {
                     return
                 }
                 querySnapshot?.documentChanges.forEach({ documentChange in
-                    let data = documentChange.document.data()
-                    let docId = documentChange.document.documentID
+                    //let data = documentChange.document.data()
+                    let documentID = documentChange.document.documentID
                     if let index = self.recentMessages.firstIndex(where: { recentMessage in
-                        return recentMessage.docId == docId
+                        return recentMessage.id == documentID
                     }) {
                         self.recentMessages.remove(at: index)
                     }
-                    self.recentMessages.insert(.init(docId: docId, dictionary: data), at: 0)
+                    
+                    do {
+                        if let rm = try documentChange.document.data(as: RecentMessage?.self) {
+                            self.recentMessages.insert(rm, at: 0)
+                        }
+                    } catch {
+                        print("this is error: \(error)")
+                    }
+                    //self.recentMessages.insert(.init(docId: docId, dictionary: data), at: 0)
                 })
             }
     }
