@@ -27,9 +27,6 @@ Chatty is a realtime chat application written in Swift5 using SwiftUI and Google
 
 This app still has some missing features that I am working on. 
 - Currently: Send image to the chat
-- Missing features:
-  - Delete/Block contact
-  - Delet message in chat
 
 ## ✍🏻 Author
 
