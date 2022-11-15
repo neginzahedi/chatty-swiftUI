@@ -30,6 +30,7 @@
 		0F8001E628EC9E6600CA8265 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8001E528EC9E6600CA8265 /* Constant.swift */; };
 		0F8001E828ECB30A00CA8265 /* ContactsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8001E728ECB30A00CA8265 /* ContactsViewModel.swift */; };
 		0F8001EA28ECB69B00CA8265 /* AddContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F8001E928ECB69B00CA8265 /* AddContactViewModel.swift */; };
+		0F8B15292923145900219393 /* screenshots.png in Resources */ = {isa = PBXBuildFile; fileRef = 0F8B15282923145900219393 /* screenshots.png */; };
 		0F9A4AAD28C122A100734709 /* ChatViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0F9A4AAC28C122A100734709 /* ChatViewModel.swift */; };
 		0FADF06428FA019200D4DEC5 /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FADF06328FA019200D4DEC5 /* ContactViewModel.swift */; };
 		0FBB6E672909997100B1BC98 /* MotherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0FBB6E662909997100B1BC98 /* MotherView.swift */; };
@@ -76,6 +77,7 @@
 		0F8001E528EC9E6600CA8265 /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		0F8001E728ECB30A00CA8265 /* ContactsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsViewModel.swift; sourceTree = "<group>"; };
 		0F8001E928ECB69B00CA8265 /* AddContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddContactViewModel.swift; sourceTree = "<group>"; };
+		0F8B15282923145900219393 /* screenshots.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = screenshots.png; path = ../../../../Downloads/screenshots.png; sourceTree = "<group>"; };
 		0F9A4AAC28C122A100734709 /* ChatViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatViewModel.swift; sourceTree = "<group>"; };
 		0FADF06328FA019200D4DEC5 /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		0FBB6E662909997100B1BC98 /* MotherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MotherView.swift; sourceTree = "<group>"; };
@@ -151,6 +153,7 @@
 		0F5953592893557F00F4B258 = {
 			isa = PBXGroup;
 			children = (
+				0F8B15272923143100219393 /* Images */,
 				0F5953642893557F00F4B258 /* chatty */,
 				0F5953632893557F00F4B258 /* Products */,
 			);
@@ -201,6 +204,14 @@
 				0F5933E72919D6EE00104D78 /* Extentions.swift */,
 			);
 			path = Model;
+			sourceTree = "<group>";
+		};
+		0F8B15272923143100219393 /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				0F8B15282923145900219393 /* screenshots.png */,
+			);
+			path = Images;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -275,6 +286,7 @@
 				0F59536D2893558000F4B258 /* Preview Assets.xcassets in Resources */,
 				0F59536A2893558000F4B258 /* Assets.xcassets in Resources */,
 				0FC0929028D11425008EBF16 /* GoogleService-Info.plist in Resources */,
+				0F8B15292923145900219393 /* screenshots.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
