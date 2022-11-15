@@ -33,7 +33,7 @@ This app still has some missing features that I am working on.
 
 ## ✍🏻 Author
 
-This app was made by me,[@neginzahedi](https://github.com/neginzahedi). If you want to contact me, you can send me message on LinkedIn [Negin Zahedi](https://www.linkedin.com/in/negin-zahedi/).
+- [Negin Zahedi](https://github.com/neginzahedi)
 
 ## License
 
